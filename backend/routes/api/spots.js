@@ -34,7 +34,6 @@ router.get('/', async (req, res) => {
     })
 
     if (previewImg) {
-      console.log(previewImg.url);
       spotJson.previewImage = previewImg.url
     }
 
