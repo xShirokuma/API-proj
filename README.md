@@ -1,8 +1,8 @@
-# `<name of application here>`
+# `API Project - AirBnB Replica Codebase`
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+`residence_booking_db`
 
 ## API Documentation
 
