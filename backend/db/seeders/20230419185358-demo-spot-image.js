@@ -17,33 +17,39 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    options.tableName = 'Bookings';
+    options.tableName = 'SpotImages'
     return queryInterface.bulkInsert(options, [
       {
-        spotId: '3',
-        userId: '1',
-        startDate: '1/1/2024',
-        endDate: '2/1/2024'
+        spotId: 1,
+        url: "www.google.com",
+        preview: true
       },
       {
-        spotId: '3',
-        userId: '2',
-        startDate: '2/1/2024',
-        endDate: '3/1/2024'
+        spotId: 1,
+        url: "www.google.com",
+        preview: false
       },
       {
-        spotId: '2',
-        userId: '3',
-        startDate: '3/1/2024',
-        endDate: '4/1/2024'
+        spotId: 2,
+        url: "www.google.com",
+        preview: true
       },
       {
-        spotId: '1',
-        userId: '3',
-        startDate: '4/1/2024',
-        endDate: '5/1/2024'
+        spotId: 2,
+        url: "www.google.com",
+        preview: false
+      },
+      {
+        spotId: 3,
+        url: "www.google.com",
+        preview: true
+      },
+      {
+        spotId: 3,
+        url: "www.google.com",
+        preview: false
       }
-    ], {})
+    ])
   },
 
   async down (queryInterface, Sequelize) {
@@ -53,15 +59,10 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = 'Bookings'
+    options.tableName = 'SpotImages'
     const Op = Sequelize.Op
-    
-    // const date = new Date('1/1/2023')
-    // console.log(date);
-
     return queryInterface.bulkDelete(options, {
-      //TODO: delete by date
-      //startDate: { [Op.lte]: date }
-    })
+      url: { [Op.in]: ['www.google.com'] }
+    }, {})
   }
 };
