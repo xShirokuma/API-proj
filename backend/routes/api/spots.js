@@ -33,7 +33,10 @@ router.get('/', async (req, res) => {
       }
     })
 
-    spotJson.previewImage = previewImg.url
+    if (previewImg) {
+      const previewImgJson = previewImg.toJSON()
+      spotJson.previewImage = previewImgJson.url
+    }
 
     spotsJsonArr.push(spotJson)
   }
