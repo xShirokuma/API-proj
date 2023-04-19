@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'Spot',
+    modelName: 'Spot'
   });
   return Spot;
 };
