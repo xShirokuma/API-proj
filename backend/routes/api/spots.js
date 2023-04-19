@@ -23,9 +23,7 @@ router.get('/', async (req, res) => {
     const spotJson = spot.toJSON()
 
     const ratingSum = await Review.sum('stars', { where: { spotId: spot.id }})
-    console.log(ratingSum);
     const reviewCount = await Review.count({ where: { spotId: spot.id }})
-    console.log(reviewCount);
     spotJson.avgRating = ratingSum / reviewCount
     
     const previewImg = await SpotImage.findOne({ 
