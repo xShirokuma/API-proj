@@ -34,7 +34,8 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         type: Sequelize.DATE
       }
-    });
+    },
+    options);
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('SpotImages');
