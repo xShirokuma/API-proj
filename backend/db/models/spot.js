@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     /**
@@ -14,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       Spot.belongsTo(
         models.User,
           { foreignKey: 'ownerId' }
+      ),
+      Spot.hasMany(
+        models.Booking,
+          { foreignKey: 'spotId'}
       )
     }
   }

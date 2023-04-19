@@ -2,6 +2,7 @@
 const {
   Model, Validator
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -14,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(
         models.Spot,
           { foreignKey: 'ownerId', onDelete: 'CASCADE', hooks: true }
+      ),
+      User.hasMany(
+        models.Booking,
+          { foreignKey: 'userId'}
       )
     }
   }
