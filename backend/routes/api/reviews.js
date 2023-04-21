@@ -49,6 +49,8 @@ router.put('/:id', requireAuth, async (req, res, next) => {
 
   reviewEdit.updatedAt = new Date()
 
+  await reviewEdit.save()
+
   return res.json(reviewEdit.toJSON())
 })
 
