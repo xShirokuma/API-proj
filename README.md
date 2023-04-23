@@ -8,6 +8,8 @@
 
 ## USER AUTHENTICATION/AUTHORIZATION
 
+<br>
+
 ### All endpoints that require authentication
 
 All endpoints that require a current user to be logged in.
@@ -24,6 +26,8 @@ All endpoints that require a current user to be logged in.
       "message": "Authentication required"
     }
     ```
+
+<br>
 
 ### All endpoints that require proper authorization
 
@@ -42,6 +46,8 @@ correct role(s) or permission(s).
       "message": "Forbidden"
     }
     ```
+
+<br>
 
 ### Get the Current User
 
@@ -82,6 +88,8 @@ Returns the information about the current user that is logged in.
       "user": null
     }
     ```
+
+<br>
 
 ### Log In a User
 
@@ -148,6 +156,8 @@ information.
       }
     }
     ```
+
+<br>
 
 ### Sign Up a User
 
@@ -238,7 +248,12 @@ user's information.
     }
     ```
 
+<br>
+<br>
+
 ## SPOTS
+
+<br>
 
 ### Get all Spots
 
@@ -280,110 +295,7 @@ Returns all the spots.
     }
     ```
 
-### Get all Spots owned by the Current User
-
-Returns all the spots owned (created) by the current user.
-
-* Require Authentication: true
-* Request
-  * Method: ?
-  * URL: ?
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Spots": [
-        {
-          "id": 1,
-          "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
-        }
-      ]
-    }
-    ```
-
-### Get details of a Spot from an id
-
-Returns the details of a spot specified by its id.
-
-* Require Authentication: false
-* Request
-  * Method: ?
-  * URL: ?
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36" ,
-      "numReviews": 5,
-      "avgStarRating": 4.5,
-      "SpotImages": [
-        {
-          "id": 1,
-          "url": "image url",
-          "preview": true
-        },
-        {
-          "id": 2,
-          "url": "image url",
-          "preview": false
-        }
-      ],
-      "Owner": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
+<br>
 
 ### Create a Spot
 
@@ -458,25 +370,17 @@ Creates and returns a new spot.
     }
     ```
 
-### Add an Image to a Spot based on the Spot's id
+<br>
 
-Create and return a new image for a spot specified by id.
+### Get details of a Spot from an id
 
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
+Returns the details of a spot specified by its id.
+
+* Require Authentication: false
 * Request
   * Method: ?
   * URL: ?
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "url": "image url",
-      "preview": true
-    }
-    ```
+  * Body: none
 
 * Successful Response
   * Status Code: 200
@@ -487,8 +391,37 @@ Create and return a new image for a spot specified by id.
     ```json
     {
       "id": 1,
-      "url": "image url",
-      "preview": true
+      "ownerId": 1,
+      "address": "123 Disney Lane",
+      "city": "San Francisco",
+      "state": "California",
+      "country": "United States of America",
+      "lat": 37.7645358,
+      "lng": -122.4730327,
+      "name": "App Academy",
+      "description": "Place where web developers are created",
+      "price": 123,
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36" ,
+      "numReviews": 5,
+      "avgStarRating": 4.5,
+      "SpotImages": [
+        {
+          "id": 1,
+          "url": "image url",
+          "preview": true
+        },
+        {
+          "id": 2,
+          "url": "image url",
+          "preview": false
+        }
+      ],
+      "Owner": {
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Smith"
+      }
     }
     ```
 
@@ -503,6 +436,8 @@ Create and return a new image for a spot specified by id.
       "message": "Spot couldn't be found"
     }
     ```
+
+<br>
 
 ### Edit a Spot
 
@@ -590,6 +525,8 @@ Updates and returns an existing spot.
     }
     ```
 
+<br>
+
 ### Delete a Spot
 
 Deletes an existing spot.
@@ -625,11 +562,11 @@ Deletes an existing spot.
     }
     ```
 
-## REVIEWS
+<br>
 
-### Get all Reviews of the Current User
+### Get all Spots owned by the Current User
 
-Returns all the reviews written by the current user.
+Returns all the spots owned (created) by the current user.
 
 * Require Authentication: true
 * Request
@@ -645,43 +582,98 @@ Returns all the reviews written by the current user.
 
     ```json
     {
-      "Reviews": [
+      "Spots": [
         {
           "id": 1,
-          "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
-          "stars": 5,
+          "ownerId": 1,
+          "address": "123 Disney Lane",
+          "city": "San Francisco",
+          "state": "California",
+          "country": "United States of America",
+          "lat": 37.7645358,
+          "lng": -122.4730327,
+          "name": "App Academy",
+          "description": "Place where web developers are created",
+          "price": 123,
           "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36" ,
-          "User": {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "Spot": {
-            "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123,
-            "previewImage": "image url"
-          },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ]
+          "updatedAt": "2021-11-19 20:39:36",
+          "avgRating": 4.5,
+          "previewImage": "image url"
         }
       ]
     }
     ```
+
+<br>
+
+### Get all Bookings for a Spot based on the Spot's id
+
+Return all the bookings for a spot specified by id.
+
+* Require Authentication: true
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
+
+* Successful Response: If you ARE NOT the owner of the spot.
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Bookings": [
+        {
+          "spotId": 1,
+          "startDate": "2021-11-19",
+          "endDate": "2021-11-20"
+        }
+      ]
+    }
+    ```
+
+* Successful Response: If you ARE the owner of the spot.
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Bookings": [
+        {
+          "User": {
+            "id": 2,
+            "firstName": "John",
+            "lastName": "Smith"
+          },
+          "id": 1,
+          "spotId": 1,
+          "userId": 2,
+          "startDate": "2021-11-19",
+          "endDate": "2021-11-20",
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36"
+        }
+      ]
+    }
+    ```
+
+* Error response: Couldn't find a Spot with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Spot couldn't be found"
+    }
+    ```
+
+<br>
 
 ### Get all Reviews by a Spot's id
 
@@ -735,6 +727,135 @@ Returns all the reviews that belong to a spot specified by id.
     ```json
     {
       "message": "Spot couldn't be found"
+    }
+    ```
+
+<br>
+
+### Add an Image to a Spot based on the Spot's id
+
+Create and return a new image for a spot specified by id.
+
+* Require Authentication: true
+* Require proper authorization: Spot must belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "url": "image url",
+      "preview": true
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "url": "image url",
+      "preview": true
+    }
+    ```
+
+* Error response: Couldn't find a Spot with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Spot couldn't be found"
+    }
+    ```
+
+<br>
+
+### Create a Booking from a Spot based on the Spot's id
+
+Create and return a new booking from a spot specified by id.
+
+* Require Authentication: true
+* Require proper authorization: Spot must NOT belong to the current user
+* Request
+  * Method: ?
+  * URL: ?
+  * Body:
+
+    ```json
+    {
+      "startDate": "2021-11-19",
+      "endDate": "2021-11-20"
+    }
+    ```
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "id": 1,
+      "spotId": 1,
+      "userId": 2,
+      "startDate": "2021-11-19",
+      "endDate": "2021-11-20",
+      "createdAt": "2021-11-19 20:39:36",
+      "updatedAt": "2021-11-19 20:39:36"
+    }
+    ```
+
+* Error response: Body validation errors
+  * Status Code: 400
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
+      "errors": {
+        "endDate": "endDate cannot be on or before startDate"
+      }
+    }
+    ```
+
+* Error response: Couldn't find a Spot with the specified id
+  * Status Code: 404
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Spot couldn't be found"
+    }
+    ```
+
+* Error response: Booking conflict
+  * Status Code: 403
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "message": "Sorry, this spot is already booked for the specified dates",
+      "errors": {
+        "startDate": "Start date conflicts with an existing booking",
+        "endDate": "End date conflicts with an existing booking"
+      }
     }
     ```
 
@@ -815,6 +936,74 @@ Create and return a new review for a spot specified by id.
     }
     ```
 
+<br>
+
+<br>
+
+## REVIEWS
+
+<br>
+
+### Get all Reviews of the Current User
+
+Returns all the reviews written by the current user.
+
+* Require Authentication: true
+* Request
+  * Method: ?
+  * URL: ?
+  * Body: none
+
+* Successful Response
+  * Status Code: 200
+  * Headers:
+    * Content-Type: application/json
+  * Body:
+
+    ```json
+    {
+      "Reviews": [
+        {
+          "id": 1,
+          "userId": 1,
+          "spotId": 1,
+          "review": "This was an awesome spot!",
+          "stars": 5,
+          "createdAt": "2021-11-19 20:39:36",
+          "updatedAt": "2021-11-19 20:39:36" ,
+          "User": {
+            "id": 1,
+            "firstName": "John",
+            "lastName": "Smith"
+          },
+          "Spot": {
+            "id": 1,
+            "ownerId": 1,
+            "address": "123 Disney Lane",
+            "city": "San Francisco",
+            "state": "California",
+            "country": "United States of America",
+            "lat": 37.7645358,
+            "lng": -122.4730327,
+            "name": "App Academy",
+            "price": 123,
+            "previewImage": "image url"
+          },
+          "ReviewImages": [
+            {
+              "id": 1,
+              "url": "image url"
+            }
+          ]
+        }
+      ]
+    }
+    ```
+
+<br>
+
+
+
 ### Add an Image to a Review based on the Review's id
 
 Create and return a new image for a review specified by id.
@@ -871,6 +1060,8 @@ Create and return a new image for a review specified by id.
       "message": "Maximum number of images for this resource was reached"
     }
     ```
+
+<br>
 
 ### Edit a Review
 
@@ -938,6 +1129,8 @@ Update and return an existing review.
     }
     ```
 
+<br>
+
 ### Delete a Review
 
 Delete an existing review.
@@ -973,7 +1166,12 @@ Delete an existing review.
     }
     ```
 
+<br>
+<br>
+
 ## BOOKINGS
+
+<br>
 
 ### Get all of the Current User's Bookings
 
@@ -1020,151 +1218,7 @@ Return all the bookings that the current user has made.
     }
     ```
 
-### Get all Bookings for a Spot based on the Spot's id
-
-Return all the bookings for a spot specified by id.
-
-* Require Authentication: true
-* Request
-  * Method: ?
-  * URL: ?
-  * Body: none
-
-* Successful Response: If you ARE NOT the owner of the spot.
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "spotId": 1,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20"
-        }
-      ]
-    }
-    ```
-
-* Successful Response: If you ARE the owner of the spot.
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "User": {
-            "id": 2,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "id": 1,
-          "spotId": 1,
-          "userId": 2,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        }
-      ]
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-### Create a Booking from a Spot based on the Spot's id
-
-Create and return a new booking from a spot specified by id.
-
-* Require Authentication: true
-* Require proper authorization: Spot must NOT belong to the current user
-* Request
-  * Method: ?
-  * URL: ?
-  * Body:
-
-    ```json
-    {
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "spotId": 1,
-      "userId": 2,
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "endDate": "endDate cannot be on or before startDate"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found"
-    }
-    ```
-
-* Error response: Booking conflict
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "errors": {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
-      }
-    }
-    ```
+<br>
 
 ### Edit a Booking
 
@@ -1259,6 +1313,8 @@ Update and return an existing booking.
     }
     ```
 
+<br>
+
 ### Delete a Booking
 
 Delete an existing booking.
@@ -1307,7 +1363,12 @@ Delete an existing booking.
     }
     ```
 
+<br>
+<br>
+
 ## IMAGES
+
+<br>
 
 ### Delete a Spot Image
 
@@ -1344,6 +1405,8 @@ Delete an existing image for a Spot.
     }
     ```
 
+<br>
+
 ### Delete a Review Image
 
 Delete an existing image for a Review.
@@ -1378,6 +1441,8 @@ Delete an existing image for a Review.
       "message": "Review Image couldn't be found"
     }
     ```
+
+<br>
 
 ## Add Query Filters to Get All Spots
 
