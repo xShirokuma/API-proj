@@ -95,7 +95,12 @@ router.post('/:id/images', requireAuth, async (req, res, next) => {
       spotId, url, preview
     })
 
-    return res.json(image.toJSON())
+    imageJson = image.toJSON()
+
+    imageJson.createdAt = imageJson.createdAt.toISOString().slice(0, 10)
+    imageJson.updatedAt = imageJson.updatedAt.toISOString().slice(0, 10)
+
+    return res.json(imageJson)
   }
 })
 
@@ -159,7 +164,12 @@ router.post('/:id/bookings', requireAuth, async (req, res, next) => {
       spotId, userId, startDate, endDate
     })
 
-    res.json(newBooking.toJSON())
+    const newBookingJson = newBooking.toJSON()
+
+    newBookingJson.startDate = newBookingJson.startDate.toISOString().slice(0, 10)
+    newBookingJson.endDate = newBookingJson.endDate.toISOString().slice(0, 10)
+
+    res.json(newBookingJson)
   }
 })
 
