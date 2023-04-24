@@ -22,8 +22,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       preview: {
-        type: Sequelize.BOOLEAN,
-        unique: true,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         type: Sequelize.DATE
