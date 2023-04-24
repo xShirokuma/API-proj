@@ -5,6 +5,7 @@ const { requireAuth } = require('../../utils/auth')
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+const { Op } = require("sequelize");
 const { Spot, SpotImage, Booking, Review, ReviewImage, User } = require('../../db/models');
 
 const router = express.Router()
@@ -395,7 +396,130 @@ router.delete('/:id', requireAuth, async (req, res, next) => {
 })
 
 router.get('/', async (req, res, next) => {
-  const spots = await Spot.findAll()
+  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+
+  let err
+
+  if (page < 1) {
+    err = Error("Bad Request")
+    err.status = 400
+    err.errors = { 
+      page: "Page must be greater than or equal to 1"
+    }
+  }
+
+  if (size < 1) {
+    err = Error("Bad Request")
+    err.status = 400
+    err.errors = { 
+      size: "Size must be greater than or equal to 1"
+    }
+  }
+
+  if (minLat < -90) {
+    err = Error("Bad Request")
+    err.status = 400
+    err.errors = { 
+      minLat: "Minimum latitude is invalid"
+    }
+  }
+
+  if (maxLat > 90) {
+    err = Error("Bad Request")
+    err.status = 400
+    err.errors = { 
+      maxLat: "Maximum latitude is invalid"
+    }
+  }
+
+  if (minLng < -180) {
+    err = Error("Bad Request")
+    err.status = 400
+    err.errors = { 
+      minLng: "Minimum longitude is invalid"
+    }
+  }
+
+  if (maxLng > 180) {
+    err = Error("Bad Request")
+    err.status = 400
+    err.errors = { 
+      maxLng: "Maximum longitude is invalid"
+    }
+  }
+
+  if (minPrice < 0) {
+    err = Error("Bad Request")
+    err.status = 400
+    err.errors = { 
+      minPrice: "Minimum price must be greater than or equal to 0"
+    }
+  }
+
+  if (maxPrice < 0) {
+    err = Error("Bad Request")
+    err.status = 400
+    err.errors = { 
+      maxPrice: "Maximum price must be greater than or equal to 0"
+    }
+  }
+
+  if (err)
+    return next(err)
+
+  const pagination = {}
+
+  if (isNaN(page) || page <= 0)
+    page = 1
+
+  size = !isNaN(size) && size > 0 ? parseInt(size) : 20
+
+  if (size > 10)
+    size = 20
+
+  pagination.limit = size
+  pagination.offset = (page-1) * size
+
+  if (isNaN(minLat)) {
+    minLat = -90
+  }
+
+  if (isNaN(maxLat)) {
+    maxLat = 90
+  }
+
+  if (isNaN(minLng)) {
+    minLng = -180
+  }
+
+  if (isNaN(maxLng)) {
+    maxLng = 180
+  }
+
+  if (isNaN(minPrice)) {
+    minPrice = 0
+  }
+
+  if (isNaN(maxPrice)) {
+    maxPrice = 100000
+  }
+
+  console.log(minLat, maxLat, minLng, maxLng, minPrice, maxPrice);
+
+  const spots = await Spot.findAll({
+    where: {
+      lat: {
+        [Op.between]: [minLat, maxLat]
+      },
+      lng: {
+        [Op.between]: [minLng, maxLng]
+      },
+      price: {
+        [Op.between]: [minPrice, maxPrice]
+      }
+    },
+    ...pagination
+  })
   const spotsJsonArr = []
 
   for (const spot of spots) {
@@ -427,7 +551,7 @@ router.get('/', async (req, res, next) => {
 
     spotsJsonArr.push(spotJson)
   }
-  return res.json({ Spots: spotsJsonArr })
+  return res.json({ Spots: spotsJsonArr, page, size })
 })
 
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
