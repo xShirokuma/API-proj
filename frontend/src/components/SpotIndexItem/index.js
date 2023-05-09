@@ -4,7 +4,7 @@ import "./SpotIndexItem.css";
 
 const SpotIndexItem = ({ spot }) => {
   return (
-    <Link className="spot-link" to={`/spots/${spot.id}`}>
+    <Link className="spot-link" key={spot.id} to={`/spots/${spot.id}`}>
       <img src={spot.previewImage} alt="preview"></img>
       <div className="row-1">
         <h4>

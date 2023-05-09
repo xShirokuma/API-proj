@@ -34,18 +34,22 @@ export const getSingleSpot = (id) => async (dispatch) => {
   }
 };
 
-const initialState = { spots: null };
+const initialState = {
+  allSpots: {},
+  singleSpot: {},
+};
 
 const spotsReducer = (state = initialState, action) => {
+  let spotsState = { ...state };
   switch (action.type) {
     case GET_SPOTS:
-      const spotsState = {};
       action.spots.forEach((spot) => {
-        spotsState[spot.id] = spot;
+        spotsState.allSpots[spot.id] = spot;
       });
       return spotsState;
     case GET_SPOT:
-      return { ...state, [action.spot.id]: action.spot };
+      spotsState.singleSpot = action.spot;
+      return spotsState;
     default:
       return state;
   }
