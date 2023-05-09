@@ -1,0 +1,9 @@
+.spot-link {
+  display: flex;
+  flex-direction: column;
+}
+
+.row-1 {
+  display: inline-flex;
+  justify-content: space-between;
+}
