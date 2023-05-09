@@ -5,10 +5,12 @@ import { useDispatch } from "react-redux";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotIndex from "./components/SpotIndex";
+import SpotDetails from "./components/SpotDetails";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -19,6 +21,7 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/" component={SpotIndex} />
+          <Route exact path="/spots/:id" component={SpotDetails} />
         </Switch>
       )}
     </>

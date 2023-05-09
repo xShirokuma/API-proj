@@ -29,8 +29,8 @@ export const getAllSpots = () => async (dispatch) => {
 export const getSingleSpot = (id) => async (dispatch) => {
   const res = await fetch(`/api/spots/${id}`);
   if (res.ok) {
-    const spotObj = await res.json();
-    dispatch();
+    const spot = await res.json();
+    dispatch(getSpot(spot));
   }
 };
 
