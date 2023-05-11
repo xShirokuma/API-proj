@@ -2,12 +2,18 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { createSpot, createSpotImages } from "../../store/spots";
+import {
+  createSpotThunk,
+  createSpotImagesThunk,
+  updateSpotThunk,
+} from "../../store/spots";
 
 const SpotForm = ({ spot, formType }) => {
   const singleSpotObj = useSelector((state) => state.spots.singleSpot);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  console.log(spot);
 
   const [country, setCountry] = useState(spot?.country);
   const [state, setState] = useState(spot?.state);
@@ -49,7 +55,7 @@ const SpotForm = ({ spot, formType }) => {
     let spotId;
 
     if (formType === "Create Spot") {
-      const newSpot = await dispatch(createSpot(spot));
+      const newSpot = await dispatch(createSpotThunk(spot));
       spotId = newSpot.id;
 
       img.spotId = spotId;
@@ -77,7 +83,12 @@ const SpotForm = ({ spot, formType }) => {
         spotImages.push({ ...img });
       }
 
-      dispatch(createSpotImages(spotImages, spotId));
+      dispatch(createSpotImagesThunk(spotImages, spotId));
+    }
+
+    if (formType === "Update Spot") {
+      dispatch(updateSpotThunk(spot));
+      spotId = spot.id;
     }
 
     if (spotId) history.push(`/spots/${spotId}`);
@@ -164,53 +175,57 @@ const SpotForm = ({ spot, formType }) => {
         />
       </label>
       <div className="errors">{errors.price}</div>
-      <h3>Liven up your spot with photos</h3>
-      <h4>Submit a link to at least one photo to publish your spot.</h4>
-      <label>
-        Preview Img
-        <input
-          type="text"
-          value={previewImage}
-          onChange={(e) => setPreviewImage(e.target.value)}
-        />
-      </label>
-      <div className="errors">{errors.previewImage}</div>
-      <label>
-        Img1
-        <input
-          type="text"
-          value={img1}
-          onChange={(e) => setImg1(e.target.value)}
-        />
-      </label>
-      <div className="errors">{errors.img1}</div>
-      <label>
-        Img2
-        <input
-          type="text"
-          value={img2}
-          onChange={(e) => setImg2(e.target.value)}
-        />
-      </label>
-      <div className="errors">{errors.img2}</div>
-      <label>
-        Img3
-        <input
-          type="text"
-          value={img3}
-          onChange={(e) => setImg3(e.target.value)}
-        />
-      </label>
-      <div className="errors">{errors.img3}</div>
-      <label>
-        Img4
-        <input
-          type="text"
-          value={img4}
-          onChange={(e) => setImg4(e.target.value)}
-        />
-      </label>
-      <div className="errors">{errors.img4}</div>
+      {formType === "Create Spot" && (
+        <>
+          <h3>Liven up your spot with photos</h3>
+          <h4>Submit a link to at least one photo to publish your spot.</h4>
+          <label>
+            Preview Img
+            <input
+              type="text"
+              value={previewImage}
+              onChange={(e) => setPreviewImage(e.target.value)}
+            />
+          </label>
+          <div className="errors">{errors.previewImage}</div>
+          <label>
+            Img1
+            <input
+              type="text"
+              value={img1}
+              onChange={(e) => setImg1(e.target.value)}
+            />
+          </label>
+          <div className="errors">{errors.img1}</div>
+          <label>
+            Img2
+            <input
+              type="text"
+              value={img2}
+              onChange={(e) => setImg2(e.target.value)}
+            />
+          </label>
+          <div className="errors">{errors.img2}</div>
+          <label>
+            Img3
+            <input
+              type="text"
+              value={img3}
+              onChange={(e) => setImg3(e.target.value)}
+            />
+          </label>
+          <div className="errors">{errors.img3}</div>
+          <label>
+            Img4
+            <input
+              type="text"
+              value={img4}
+              onChange={(e) => setImg4(e.target.value)}
+            />
+          </label>
+          <div className="errors">{errors.img4}</div>
+        </>
+      )}
       <button type="submit">{formType}</button>
     </form>
   );

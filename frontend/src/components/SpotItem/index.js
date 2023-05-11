@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-import "./SpotIndexItem.css";
+import "./SpotItem.css";
 
-const SpotIndexItem = ({ spot }) => {
+const SpotItem = ({ spot }) => {
   return (
     <Link className="spot-link" key={spot.id} to={`/spots/${spot.id}`}>
       <img src={spot.previewImage} alt="preview"></img>
@@ -17,4 +17,4 @@ const SpotIndexItem = ({ spot }) => {
   );
 };
 
-export default SpotIndexItem;
+export default SpotItem;

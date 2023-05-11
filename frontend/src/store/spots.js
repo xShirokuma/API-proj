@@ -5,6 +5,8 @@ const GET_SPOTS = "spots/getSpots";
 const GET_SPOT = "spots/getSpot";
 const POST_SPOT = "spots/postSpot";
 const POST_SPOT_IMAGE = "spots/postSpotImage";
+const DELETE_SPOT = "spots/deleteSpot";
+const DELETE_SPOT_IMAGE = "spots/deleteSpotImage";
 
 // action creators
 const getSpots = (spots) => {
@@ -35,8 +37,21 @@ const postSpotImage = (spotImage) => {
   };
 };
 
+const deleteSpot = (id) => {
+  return {
+    type: DELETE_SPOT,
+    id,
+  };
+};
+
+const deleteSpotImage = () => {
+  return {
+    type: DELETE_SPOT_IMAGE,
+  };
+};
+
 // thunks
-export const getAllSpots = () => async (dispatch) => {
+export const getAllSpotsThunk = () => async (dispatch) => {
   const res = await fetch("/api/spots");
   if (res.ok) {
     const spotsObj = await res.json();
@@ -44,7 +59,7 @@ export const getAllSpots = () => async (dispatch) => {
   }
 };
 
-export const getSingleSpot = (id) => async (dispatch) => {
+export const getSingleSpotThunk = (id) => async (dispatch) => {
   const res = await fetch(`/api/spots/${id}`);
   if (res.ok) {
     const spot = await res.json();
@@ -52,7 +67,15 @@ export const getSingleSpot = (id) => async (dispatch) => {
   }
 };
 
-export const createSpot = (spot) => async (dispatch) => {
+export const getUserSpotsThunk = () => async (dispatch) => {
+  const res = await fetch("/api/spots/current");
+  if (res.ok) {
+    const spotsObj = await res.json();
+    dispatch(getSpots(spotsObj.Spots));
+  }
+};
+
+export const createSpotThunk = (spot) => async (dispatch) => {
   const options = {
     method: "POST",
     headers: {
@@ -70,7 +93,7 @@ export const createSpot = (spot) => async (dispatch) => {
   }
 };
 
-export const createSpotImages = (spotImages, id) => async (dispatch) => {
+export const createSpotImagesThunk = (spotImages, id) => async (dispatch) => {
   for (const spotImage of spotImages) {
     const options = {
       method: "POST",
@@ -85,6 +108,41 @@ export const createSpotImages = (spotImages, id) => async (dispatch) => {
     if (res.ok) {
       dispatch(postSpotImage(spotImage));
     }
+  }
+};
+
+export const updateSpotThunk = (spot) => async (dispatch) => {
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(spot),
+  };
+
+  console.log(`spots.js 123: ${spot}`);
+
+  const res = await csrfFetch(`/api/spots/${spot.id}`, options);
+
+  if (res.ok) {
+    const updatedSpot = await res.json();
+    dispatch(postSpot(spot));
+    return updatedSpot;
+  }
+};
+
+export const deleteSpotThunk = (id) => async (dispatch) => {
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const res = await csrfFetch(`/api/spots/${id}`, options);
+
+  if (res.ok) {
+    dispatch(deleteSpot(id));
   }
 };
 
@@ -109,8 +167,14 @@ const spotsReducer = (state = initialState, action) => {
       spotsState.singleSpot = action.spot;
       return spotsState;
     case POST_SPOT_IMAGE:
+      if (!spotsState.singleSpot.SpotImages)
+        spotsState.singleSpot.SpotImages = [];
       spotsState.singleSpot.SpotImages.push(action.spotImage);
       return spotsState;
+    case DELETE_SPOT:
+      delete spotsState.allSpots[action.id];
+      return spotsState;
+    case DELETE_SPOT_IMAGE:
     default:
       return state;
   }
