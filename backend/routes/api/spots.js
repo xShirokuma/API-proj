@@ -34,21 +34,21 @@ const validateSpot = [
     .exists({ checkFalsy: true })
     .notEmpty()
     .withMessage("Country is required"),
-  check("lat")
-    .exists()
-    .isFloat({
-      min: -90,
-      max: 90,
-    })
-    .withMessage("Latitude is not valid"),
-  check("lng")
-    .exists()
-    .notEmpty()
-    .isFloat({
-      min: -180,
-      max: 180,
-    })
-    .withMessage("Latitude is not valid"),
+  // check("lat")
+  //   .exists()
+  //   .isFloat({
+  //     min: -90,
+  //     max: 90,
+  //   })
+  //   .withMessage("Latitude is not valid"),
+  // check("lng")
+  //   .exists()
+  //   .notEmpty()
+  //   .isFloat({
+  //     min: -180,
+  //     max: 180,
+  //   })
+  //   .withMessage("Latitude is not valid"),
   check("name")
     .exists({ checkFalsy: true })
     .notEmpty()
@@ -346,13 +346,13 @@ router.get("/:id", async (req, res, next) => {
     where: {
       id: req.params.id,
     },
-    include: {
-      model: SpotImage,
-      attributes: ["id", "url", "preview"],
-      model: User,
-      as: "Owner",
-      attributes: ["id", "firstName", "lastName"],
-    },
+    include: [
+      {
+        model: SpotImage,
+        attributes: ["id", "url", "preview"],
+      },
+      { model: User, as: "Owner", attributes: ["id", "firstName", "lastName"] },
+    ],
   });
 
   if (!spot) {
@@ -546,12 +546,12 @@ router.get("/", async (req, res, next) => {
 
   const spots = await Spot.findAll({
     where: {
-      lat: {
-        [Op.between]: [minLat, maxLat],
-      },
-      lng: {
-        [Op.between]: [minLng, maxLng],
-      },
+      // lat: {
+      //   [Op.between]: [minLat, maxLat],
+      // },
+      // lng: {
+      //   [Op.between]: [minLng, maxLng],
+      // },
       price: {
         [Op.between]: [minPrice, maxPrice],
       },
@@ -587,6 +587,7 @@ router.get("/", async (req, res, next) => {
 
     spotsJsonArr.push(spotJson);
   }
+  console.log(spotsJsonArr);
   return res.json({ Spots: spotsJsonArr, page, size });
 });
 
@@ -607,6 +608,8 @@ router.post("/", requireAuth, validateSpot, async (req, res, next) => {
     description,
     price,
   });
+
+  console.log(spot);
 
   return res.status(201).json(spot);
 });
