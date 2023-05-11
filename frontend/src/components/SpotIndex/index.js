@@ -8,7 +8,7 @@ import "./SpotIndex.css";
 
 const SpotIndex = () => {
   const spotsObj = useSelector((state) => state.spots);
-  const spots = Object.values(spotsObj);
+  const spots = Object.values(spotsObj.allSpots);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,10 +17,8 @@ const SpotIndex = () => {
 
   if (spots[0] === null) return;
 
-  console.log(spots);
-
   return (
-    <div className="location-container">
+    <div className="spots-container">
       {spots.map((spot) => (
         <SpotIndexItem spot={spot} key={spot.id} />
       ))}

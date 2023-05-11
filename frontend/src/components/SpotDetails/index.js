@@ -11,7 +11,7 @@ const SpotDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const spot = spotsObj[id];
+  const spot = spotsObj.singleSpot;
 
   useEffect(() => {
     dispatch(getSingleSpot(id));
