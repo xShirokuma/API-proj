@@ -214,6 +214,7 @@ router.post(
     const previousReview = await Review.findOne({
       where: {
         userId: userId,
+        spotId: spotId,
       },
     });
 
@@ -587,7 +588,6 @@ router.get("/", async (req, res, next) => {
 
     spotsJsonArr.push(spotJson);
   }
-  console.log(spotsJsonArr);
   return res.json({ Spots: spotsJsonArr, page, size });
 });
 
@@ -608,8 +608,6 @@ router.post("/", requireAuth, validateSpot, async (req, res, next) => {
     description,
     price,
   });
-
-  console.log(spot);
 
   return res.status(201).json(spot);
 });

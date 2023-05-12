@@ -1,0 +1,51 @@
+.about-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  border-bottom: solid 2px black;
+}
+
+.spot-images-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+  "preview img1 img2"
+  "preview img3 img4";
+  gap: 1%;
+}
+
+.spot-details-container {
+  padding: 0 2.5%;
+}
+.spot-preview-image {
+  grid-area: preview;
+}
+
+.booking-container {
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-stats {
+  padding: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.booking-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.booking-button-container > button {
+  width: 80%;
+  height: 100%;
+}
+
+.ratings-reviews-container {
+  display: flex;
+}
