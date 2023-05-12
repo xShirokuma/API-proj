@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -28,6 +28,10 @@ const ReviewForm = ({ reviewObj, formType }) => {
       const newReview = await dispatch(
         createSpotReviewThunk(reviewObj, spotId)
       );
+
+      if (newReview.errors) {
+        setErrors(newReview.errors);
+      }
     }
 
     // IMPORTANT: Need to await this, otherwise the closeForm will happen first

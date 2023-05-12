@@ -14,7 +14,7 @@ const SpotItem = ({ spot }) => {
         <h4>
           {spot.city}, {spot.state}
         </h4>
-        <h4>{spot.avgRating}</h4>
+        <h4>{spot.avgRating.toFixed(2)}</h4>
       </div>
       <h4>${spot.price}</h4>
     </Link>

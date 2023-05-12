@@ -8,10 +8,15 @@ const CreateReviewModal = ({ formType }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const reviewObj = {
+    stars: 1,
+    review: "",
+  };
+
   return (
     <div className="create-review-modal">
       <h2>How was your stay?</h2>
-      <ReviewForm formType={formType} />
+      <ReviewForm reviewObj={reviewObj} formType={formType} />
     </div>
   );
 };

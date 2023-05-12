@@ -2,7 +2,7 @@ import "./ReviewItem.css";
 
 const ReviewItem = ({ reviewObj }) => {
   const { review, stars, createdAt } = reviewObj;
-  const { firstName, lastName } = reviewObj.User;
+  const { firstName, lastName } = reviewObj?.User;
 
   return (
     <div className="review-item">

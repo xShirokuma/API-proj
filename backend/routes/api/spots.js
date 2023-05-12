@@ -214,6 +214,7 @@ router.post(
     const previousReview = await Review.findOne({
       where: {
         userId: userId,
+        spotId: spotId,
       },
     });
 

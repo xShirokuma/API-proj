@@ -9,6 +9,7 @@ import { getSingleSpotThunk } from "../../store/spots";
 import { getSpotReviewsThunk } from "../../store/reviews";
 
 import "./SpotDetails.css";
+import DeleteReviewModal from "../DeleteReviewModal";
 
 const SpotDetails = () => {
   const state = useSelector((state) => state);
@@ -18,7 +19,6 @@ const SpotDetails = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    console.log("test");
     dispatch(getSingleSpotThunk(id));
     dispatch(getSpotReviewsThunk(id));
   }, [dispatch, id]);
@@ -69,7 +69,9 @@ const SpotDetails = () => {
               <div className="price">${spot.price} / night</div>
               <div className="ratings-reviews-container">
                 <div className="rating">
-                  <i className="fa-solid fa-star">{spot.avgStarRating} ·</i>
+                  <i className="fa-solid fa-star">
+                    {spot.avgStarRating.toFixed(2)} ·
+                  </i>
                 </div>
                 <div className="reviews">{spot.numReviews} reviews</div>
               </div>
@@ -83,7 +85,9 @@ const SpotDetails = () => {
       <div className="reviews-container">
         <div className="ratings-reviews-container">
           <div className="rating">
-            <i className="fa-solid fa-star">{spot.avgStarRating} ·</i>
+            <i className="fa-solid fa-star">
+              {spot.avgStarRating.toFixed(2)} ·
+            </i>
           </div>
           <div className="reviews">{spot.numReviews} reviews</div>
         </div>
@@ -96,7 +100,14 @@ const SpotDetails = () => {
       </div>
       <div>
         {reviews.map((review) => (
-          <ReviewItem reviewObj={review} key={review.id} />
+          <div className={`review-container-${review.id}`}>
+            <ReviewItem reviewObj={review} key={`reviewitem-${review.id}`} />
+            <OpenModalButton
+              key={`review-delete-button-${review.id}`}
+              buttonText="Delete"
+              modalComponent={<DeleteReviewModal id={review.id} />}
+            />
+          </div>
         ))}
       </div>
     </div>
