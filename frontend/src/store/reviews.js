@@ -29,10 +29,12 @@ const reviewsReducer = (state = initialState, action) => {
   const reviewsState = { ...state };
   switch (action.type) {
     case GET_SPOT_REVIEWS:
-      console.log(action.reviews);
+      reviewsState.spot = {};
+      reviewsState.user = {};
       action.reviews.forEach((review) => {
         reviewsState.spot[review.id] = review;
       });
+      console.log(reviewsState);
       return reviewsState;
     default:
       return reviewsState;

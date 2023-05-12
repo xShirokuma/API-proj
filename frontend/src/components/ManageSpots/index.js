@@ -29,7 +29,6 @@ const ManageSpots = () => {
   };
 
   const updateSpot = (id) => {
-    console.log(id);
     history.push(`/spots/${id}/edit`);
   };
 

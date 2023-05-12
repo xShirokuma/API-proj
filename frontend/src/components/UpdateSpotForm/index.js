@@ -11,15 +11,11 @@ const UpdateSpotForm = () => {
   const dispatch = useDispatch();
   const allSpotsObj = useSelector((state) => state.spots.allSpots);
 
-  console.log(id);
-
   const spot = allSpotsObj[id];
 
   useEffect(() => {
     dispatch(getSingleSpotThunk(id));
   }, [dispatch, id]);
-
-  console.log(spot);
 
   return (
     <div>

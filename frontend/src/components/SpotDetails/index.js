@@ -12,20 +12,20 @@ const SpotDetails = () => {
   const state = useSelector((state) => state);
   const spotsState = state.spots;
   const reviewsState = state.reviews;
-  console.log(reviewsState);
   const dispatch = useDispatch();
   const { id } = useParams();
 
   useEffect(() => {
+    console.log("test");
     dispatch(getSingleSpotThunk(id));
     dispatch(getSpotReviewsThunk(id));
   }, [dispatch, id]);
 
   const spot = spotsState.singleSpot;
   const reviews = Object.values(reviewsState.spot);
-  console.log(reviews);
 
   if (!spot) return;
+  if (!reviews) return;
   if (!spot.SpotImages) return;
   const spotImages = [...spot?.SpotImages];
   if (!spot.Owner) return;

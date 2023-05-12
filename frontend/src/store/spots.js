@@ -44,12 +44,6 @@ const deleteSpot = (id) => {
   };
 };
 
-const deleteSpotImage = () => {
-  return {
-    type: DELETE_SPOT_IMAGE,
-  };
-};
-
 // thunks
 export const getAllSpotsThunk = () => async (dispatch) => {
   const res = await fetch("/api/spots");
@@ -71,6 +65,7 @@ export const getUserSpotsThunk = () => async (dispatch) => {
   const res = await fetch("/api/spots/current");
   if (res.ok) {
     const spotsObj = await res.json();
+    console.log(spotsObj.Spots);
     dispatch(getSpots(spotsObj.Spots));
   }
 };
@@ -118,8 +113,6 @@ export const updateSpotThunk = (spot) => async (dispatch) => {
     body: JSON.stringify(spot),
   };
 
-  console.log(`spots.js 123: ${spot}`);
-
   const res = await csrfFetch(`/api/spots/${spot.id}`, options);
 
   if (res.ok) {
@@ -150,9 +143,10 @@ const initialState = {
 };
 
 const spotsReducer = (state = initialState, action) => {
-  let spotsState = { ...state };
+  const spotsState = { ...state };
   switch (action.type) {
     case GET_SPOTS:
+      spotsState.allSpots = {};
       action.spots.forEach((spot) => {
         spotsState.allSpots[spot.id] = spot;
       });

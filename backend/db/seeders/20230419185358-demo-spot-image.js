@@ -69,6 +69,56 @@ module.exports = {
         url: "https://lh3.googleusercontent.com/p/AF1QipNv5oUOX1ZSZynk4onCBXMstl8Oa2g1CaWehehc=s1360-w1360-h1020",
         preview: false,
       },
+      {
+        spotId: 3,
+        url: "https://lh3.googleusercontent.com/p/AF1QipP7IoZNxOfdmcCX_JYbO79xsbu3jJdAG5xzqSa1=s1360-w1360-h1020",
+        preview: true,
+      },
+      {
+        spotId: 3,
+        url: "https://lh3.googleusercontent.com/p/AF1QipPaGTTmXyG_ghRR8cHe_y9yvDtz7pyxurtHgBky=s1360-w1360-h1020",
+        preview: false,
+      },
+      {
+        spotId: 3,
+        url: "https://lh3.googleusercontent.com/p/AF1QipNr2Vg5bLi3IZqlU50X0nHwJc9tr6h40shnUncM=s1360-w1360-h1020",
+        preview: false,
+      },
+      {
+        spotId: 3,
+        url: "https://lh3.googleusercontent.com/p/AF1QipPuxNTjvhiMBMsW8PMhpAucvoCrd-UxDXJTvXLx=s1360-w1360-h1020",
+        preview: false,
+      },
+      {
+        spotId: 3,
+        url: "https://lh3.googleusercontent.com/p/AF1QipO5q-IoQvLBL2DKpF6VdFVFMx-wxrZthkCzcgQ3=s1360-w1360-h1020",
+        preview: false,
+      },
+      {
+        spotId: 4,
+        url: "https://lh3.googleusercontent.com/p/AF1QipOh7Tt0wR-OE7jdI4XbAGYmlAXGitYPrsjCNyp6=s1360-w1360-h1020",
+        preview: true,
+      },
+      {
+        spotId: 4,
+        url: "https://lh3.googleusercontent.com/p/AF1QipPdnjRI72QU1_31AKSSWLRUzccZ_2jPrJ4BbG8e=s1360-w1360-h1020",
+        preview: false,
+      },
+      {
+        spotId: 4,
+        url: "https://lh3.googleusercontent.com/p/AF1QipPiV9YBFA5qL8xjS7Pti_NX4-hTya1fBuAYXnQ4=s1360-w1360-h1020",
+        preview: false,
+      },
+      {
+        spotId: 4,
+        url: "https://lh3.googleusercontent.com/p/AF1QipOlzf7VJcLwsN13oW1AKcYOfZCcWMs-hIADzy7d=s1360-w1360-h1020",
+        preview: false,
+      },
+      {
+        spotId: 4,
+        url: "https://lh3.googleusercontent.com/p/AF1QipMhFTJJc58DHbVq5WzoWQzaOjiU2UKH5nkTUy0j=s1360-w1360-h1020",
+        preview: false,
+      },
     ]);
   },
 

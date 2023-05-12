@@ -15,8 +15,6 @@ const SpotForm = ({ spot, formType }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  console.log(spot);
-
   const [country, setCountry] = useState(spot?.country);
   const [state, setState] = useState(spot?.state);
   const [city, setCity] = useState(spot?.city);
@@ -68,9 +66,8 @@ const SpotForm = ({ spot, formType }) => {
 
       //set other imgs
       img.preview = false;
-      console.log(`img1: ${img1}`);
+
       if (img1) {
-        console.log(`img1 test`);
         img.url = img1;
         spotImages.push({ ...img });
       }
@@ -86,8 +83,6 @@ const SpotForm = ({ spot, formType }) => {
         img.url = img4;
         spotImages.push({ ...img });
       }
-
-      console.log(spotImages);
 
       for (const spotImage of spotImages) {
         dispatch(createSpotImageThunk(spotImage, spotId));
