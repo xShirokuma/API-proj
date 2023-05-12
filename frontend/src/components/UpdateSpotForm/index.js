@@ -18,7 +18,7 @@ const UpdateSpotForm = () => {
   }, [dispatch, id]);
 
   return (
-    <div>
+    <div className="update-spot-form-container">
       <h2>Update a Spot</h2>
       <SpotForm spot={spot} formType="Update Spot" />
     </div>

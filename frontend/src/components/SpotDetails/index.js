@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import ReviewItem from "../ReviewItem";
+import OpenModalButton from "../OpenModalButton";
+import CreateReviewModal from "../CreateReviewModal";
 import { getSingleSpotThunk } from "../../store/spots";
 import { getSpotReviewsThunk } from "../../store/reviews";
 
@@ -85,6 +87,12 @@ const SpotDetails = () => {
           </div>
           <div className="reviews">{spot.numReviews} reviews</div>
         </div>
+      </div>
+      <div className="reviews-create-button">
+        <OpenModalButton
+          buttonText="Post Your Review"
+          modalComponent={<CreateReviewModal formType="Submit Your Review" />}
+        />
       </div>
       <div>
         {reviews.map((review) => (
