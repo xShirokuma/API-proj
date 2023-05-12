@@ -2,20 +2,28 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
+import ReviewItem from "../ReviewItem";
 import { getSingleSpotThunk } from "../../store/spots";
+import { getSpotReviewsThunk } from "../../store/reviews";
 
 import "./SpotDetails.css";
 
 const SpotDetails = () => {
-  const spotsObj = useSelector((state) => state.spots);
+  const state = useSelector((state) => state);
+  const spotsState = state.spots;
+  const reviewsState = state.reviews;
+  console.log(reviewsState);
   const dispatch = useDispatch();
   const { id } = useParams();
 
   useEffect(() => {
     dispatch(getSingleSpotThunk(id));
+    dispatch(getSpotReviewsThunk(id));
   }, [dispatch, id]);
 
-  const spot = spotsObj.singleSpot;
+  const spot = spotsState.singleSpot;
+  const reviews = Object.values(reviewsState.spot);
+  console.log(reviews);
 
   if (!spot) return;
   if (!spot.SpotImages) return;
@@ -37,7 +45,7 @@ const SpotDetails = () => {
           <img src={spotImages[1]?.url} referrerPolicy="no-referrer"></img>
         </div>
         <div className="img2">
-          <img src={spotImages[2]?.url} referrerpolicy="no-referrer"></img>
+          <img src={spotImages[2]?.url} referrerPolicy="no-referrer"></img>
         </div>
         <div className="img3">
           <img src={spotImages[3]?.url} referrerPolicy="no-referrer"></img>
@@ -53,22 +61,36 @@ const SpotDetails = () => {
           </h2>
           <p>{spot.description}</p>
         </div>
-        <div className="booking-container">
-          <div className="booking-stats">
-            <div className="price">${spot.price} / night</div>
-            <div className="ratings-reviews-container">
-              <div className="rating">
-                <i className="fa-solid fa-star">{spot.avgStarRating} ·</i>
+        <div>
+          <div className="booking-container">
+            <div className="booking-stats">
+              <div className="price">${spot.price} / night</div>
+              <div className="ratings-reviews-container">
+                <div className="rating">
+                  <i className="fa-solid fa-star">{spot.avgStarRating} ·</i>
+                </div>
+                <div className="reviews">{spot.numReviews} reviews</div>
               </div>
-              <div className="reviews">{spot.numReviews} reviews</div>
             </div>
-          </div>
-          <div className="booking-button-container">
-            <button>Reserve</button>
+            <div className="booking-button-container">
+              <button>Reserve</button>
+            </div>
           </div>
         </div>
       </div>
-      <div className="reviews-container"></div>
+      <div className="reviews-container">
+        <div className="ratings-reviews-container">
+          <div className="rating">
+            <i className="fa-solid fa-star">{spot.avgStarRating} ·</i>
+          </div>
+          <div className="reviews">{spot.numReviews} reviews</div>
+        </div>
+      </div>
+      <div>
+        {reviews.map((review) => (
+          <ReviewItem reviewObj={review} key={review.id} />
+        ))}
+      </div>
     </div>
   );
 };
