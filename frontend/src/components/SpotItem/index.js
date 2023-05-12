@@ -5,7 +5,11 @@ import "./SpotItem.css";
 const SpotItem = ({ spot }) => {
   return (
     <Link className="spot-link" key={spot.id} to={`/spots/${spot.id}`}>
-      <img src={spot.previewImage} alt="preview"></img>
+      <img
+        src={spot.previewImage}
+        alt="preview"
+        referrerPolicy="no-referrer"
+      ></img>
       <div className="row-1">
         <h4>
           {spot.city}, {spot.state}

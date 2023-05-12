@@ -93,21 +93,19 @@ export const createSpotThunk = (spot) => async (dispatch) => {
   }
 };
 
-export const createSpotImagesThunk = (spotImages, id) => async (dispatch) => {
-  for (const spotImage of spotImages) {
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(spotImage),
-    };
+export const createSpotImageThunk = (spotImage, id) => async (dispatch) => {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(spotImage),
+  };
 
-    const res = await csrfFetch(`/api/spots/${id}/images`, options);
+  const res = await csrfFetch(`/api/spots/${id}/images`, options);
 
-    if (res.ok) {
-      dispatch(postSpotImage(spotImage));
-    }
+  if (res.ok) {
+    dispatch(postSpotImage(spotImage));
   }
 };
 
@@ -173,7 +171,12 @@ const spotsReducer = (state = initialState, action) => {
       return spotsState;
     case DELETE_SPOT:
       delete spotsState.allSpots[action.id];
-      return spotsState;
+      const newState = {
+        ...spotsState,
+        singleSpot: { ...spotsState.singleSpot },
+        allSpots: { ...spotsState.allSpots },
+      };
+      return newState;
     case DELETE_SPOT_IMAGE:
     default:
       return state;

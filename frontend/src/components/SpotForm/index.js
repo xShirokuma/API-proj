@@ -4,9 +4,11 @@ import { useHistory } from "react-router-dom";
 
 import {
   createSpotThunk,
-  createSpotImagesThunk,
+  createSpotImageThunk,
   updateSpotThunk,
 } from "../../store/spots";
+
+import "./SpotForm.css";
 
 const SpotForm = ({ spot, formType }) => {
   const singleSpotObj = useSelector((state) => state.spots.singleSpot);
@@ -50,8 +52,8 @@ const SpotForm = ({ spot, formType }) => {
       url: "",
       preview: true,
     };
-    const spotImages = [];
 
+    const spotImages = [];
     let spotId;
 
     if (formType === "Create Spot") {
@@ -66,7 +68,9 @@ const SpotForm = ({ spot, formType }) => {
 
       //set other imgs
       img.preview = false;
+      console.log(`img1: ${img1}`);
       if (img1) {
+        console.log(`img1 test`);
         img.url = img1;
         spotImages.push({ ...img });
       }
@@ -83,7 +87,11 @@ const SpotForm = ({ spot, formType }) => {
         spotImages.push({ ...img });
       }
 
-      dispatch(createSpotImagesThunk(spotImages, spotId));
+      console.log(spotImages);
+
+      for (const spotImage of spotImages) {
+        dispatch(createSpotImageThunk(spotImage, spotId));
+      }
     }
 
     if (formType === "Update Spot") {
@@ -97,13 +105,14 @@ const SpotForm = ({ spot, formType }) => {
   return (
     <form onSubmit={handleSubmit}>
       <h3>Where's your place located?</h3>
-      <h4>
+      <h5>
         Guests will only get your exact address once they book a reservation.
-      </h4>
-      <div className="errors">{errors.country}</div>
+      </h5>
       <label>
+        <div className="errors">{errors.country}</div>
         Country
         <input
+          className="country"
           type="text"
           value={country}
           onChange={(e) => setCountry(e.target.value)}

@@ -1,4 +1,8 @@
 /* TODO Add site wide styles */
+* {
+  font-family: 'Helvetica', 'Arial', sans-serif
+}
+
 li {
   list-style-type: none;
 }

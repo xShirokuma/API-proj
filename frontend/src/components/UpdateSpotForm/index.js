@@ -4,6 +4,8 @@ import SpotForm from "../SpotForm";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleSpotThunk } from "../../store/spots";
 
+import "./UpdateSpotForm.css";
+
 const UpdateSpotForm = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const UpdateSpotForm = () => {
 
   return (
     <div>
-      <h1>Update a new Spot</h1>
+      <h2>Update a Spot</h2>
       <SpotForm spot={spot} formType="Update Spot" />
     </div>
   );
