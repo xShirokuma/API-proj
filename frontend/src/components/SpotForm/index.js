@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -30,6 +30,20 @@ const SpotForm = ({ spot, formType }) => {
 
   const [errors, setErrors] = useState({});
 
+  useEffect(() => {
+    const errorHandler = {};
+    if (!country.length) errors.country = "Country is required";
+    if (!state.length) errors.state = "State is required";
+    if (!city.length) errors.city = "City is required";
+    if (!address.length) errors.address = "Address is required";
+    if (description.length < 30)
+      errors.description = "Description must be at least 30 characters";
+    if (!name.length) errors.name = "Name is required";
+    if (price < 1 || isNaN(price)) errors.price = "Price is required";
+    if (!previewImage.length) errors.preview = "Preview image is required";
+    setErrors(errorHandler);
+  }, [country, state, city, address, description, name, price, previewImage]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
@@ -56,6 +70,9 @@ const SpotForm = ({ spot, formType }) => {
 
     if (formType === "Create Spot") {
       const newSpot = await dispatch(createSpotThunk(spot));
+
+      console.log(`newSpot Return: ${newSpot}`);
+
       spotId = newSpot.id;
 
       img.spotId = spotId;
@@ -94,6 +111,7 @@ const SpotForm = ({ spot, formType }) => {
       spotId = spot.id;
     }
 
+    console.log("test");
     if (spotId) history.push(`/spots/${spotId}`);
   };
 

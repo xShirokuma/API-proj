@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
 
+import StarRatingInput from "../StarRatingInput";
 import { createSpotReviewThunk } from "../../store/reviews";
 
 const ReviewForm = ({ reviewObj, formType }) => {
@@ -11,6 +12,14 @@ const ReviewForm = ({ reviewObj, formType }) => {
   const [errors, setErrors] = useState({});
   const [review, setReview] = useState(reviewObj?.review);
   const [stars, setStars] = useState(reviewObj?.stars);
+
+  const spot = state.spots.singleSpot;
+
+  useEffect(() => {
+    if (review.length < 10)
+      errors.review = "Review must be at least 10 characters.";
+    if (!stars) errors.stars = "Please set a rating.";
+  }, [review, stars]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,6 +50,10 @@ const ReviewForm = ({ reviewObj, formType }) => {
     closeModal();
   };
 
+  const onChange = (number) => {
+    setStars(parseInt(number));
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <textarea
@@ -48,13 +61,7 @@ const ReviewForm = ({ reviewObj, formType }) => {
         onChange={(e) => setReview(e.target.value)}
         value={review}
       ></textarea>
-      <label>
-        <input
-          type="number"
-          value={stars}
-          onChange={(e) => setStars(e.target.value)}
-        />
-      </label>
+      <StarRatingInput rating={stars} disabled={false} onChange={onChange} />
       <button type="submit">{formType}</button>
     </form>
   );

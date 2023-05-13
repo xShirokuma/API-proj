@@ -1,7 +1,9 @@
 import "./ReviewItem.css";
 
 const ReviewItem = ({ reviewObj }) => {
-  const { review, stars, createdAt } = reviewObj;
+  if (!reviewObj) return;
+
+  const { review, createdAt } = reviewObj;
   const { firstName, lastName } = reviewObj?.User;
 
   return (

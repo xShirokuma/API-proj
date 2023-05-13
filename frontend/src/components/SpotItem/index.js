@@ -4,19 +4,19 @@ import "./SpotItem.css";
 
 const SpotItem = ({ spot }) => {
   return (
-    <Link className="spot-link" key={spot.id} to={`/spots/${spot.id}`}>
+    <Link className="spot-link" key={spot?.id} to={`/spots/${spot?.id}`}>
       <img
-        src={spot.previewImage}
+        src={spot?.previewImage}
         alt="preview"
         referrerPolicy="no-referrer"
       ></img>
       <div className="row-1">
         <h4>
-          {spot.city}, {spot.state}
+          {spot?.city}, {spot?.state}
         </h4>
-        <h4>{spot.avgRating.toFixed(2)}</h4>
+        <h4>{spot?.avgRating?.toFixed(2)}</h4>
       </div>
-      <h4>${spot.price}</h4>
+      <h4>${spot?.price}</h4>
     </Link>
   );
 };

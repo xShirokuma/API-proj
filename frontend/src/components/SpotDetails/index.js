@@ -29,9 +29,13 @@ const SpotDetails = () => {
   if (!spot) return;
   if (!reviews) return;
   if (!spot.SpotImages) return;
-  const spotImages = [...spot?.SpotImages];
   if (!spot.Owner) return;
+  const spotImages = [...spot?.SpotImages];
   const { firstName, lastName } = spot?.Owner;
+
+  let rating;
+  if (spot.numReviews < 1) rating = "New";
+  else rating = spot.avgStarRating.toFixed(2);
 
   return (
     <div className="spot-details-container">
@@ -69,9 +73,7 @@ const SpotDetails = () => {
               <div className="price">${spot.price} / night</div>
               <div className="ratings-reviews-container">
                 <div className="rating">
-                  <i className="fa-solid fa-star">
-                    {spot.avgStarRating.toFixed(2)} ·
-                  </i>
+                  <i className="fa-solid fa-star">{rating} ·</i>
                 </div>
                 <div className="reviews">{spot.numReviews} reviews</div>
               </div>
@@ -85,9 +87,7 @@ const SpotDetails = () => {
       <div className="reviews-container">
         <div className="ratings-reviews-container">
           <div className="rating">
-            <i className="fa-solid fa-star">
-              {spot.avgStarRating.toFixed(2)} ·
-            </i>
+            <i className="fa-solid fa-star">{rating} ·</i>
           </div>
           <div className="reviews">{spot.numReviews} reviews</div>
         </div>

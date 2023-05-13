@@ -6,7 +6,6 @@ const GET_SPOT = "spots/getSpot";
 const POST_SPOT = "spots/postSpot";
 const POST_SPOT_IMAGE = "spots/postSpotImage";
 const DELETE_SPOT = "spots/deleteSpot";
-const DELETE_SPOT_IMAGE = "spots/deleteSpotImage";
 
 // action creators
 const getSpots = (spots) => {
@@ -78,12 +77,17 @@ export const createSpotThunk = (spot) => async (dispatch) => {
     body: JSON.stringify(spot),
   };
 
-  const res = await csrfFetch("/api/spots", options);
+  try {
+    const res = await csrfFetch("/api/spots", options);
 
-  if (res.ok) {
-    const newSpot = await res.json();
-    dispatch(postSpot(spot));
-    return newSpot;
+    if (res.ok) {
+      console.log("test");
+      const newSpot = await res.json();
+      dispatch(postSpot(spot));
+      return newSpot;
+    }
+  } catch (error) {
+    return error;
   }
 };
 
@@ -146,33 +150,34 @@ const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_SPOTS:
       spotsState.allSpots = {};
+      spotsState.singleSpot = { ...state.singleSpot };
       action.spots.forEach((spot) => {
         spotsState.allSpots[spot.id] = spot;
       });
       return spotsState;
     case GET_SPOT:
+      spotsState.allSpots = { ...state.allSpots };
       spotsState.singleSpot = action.spot;
       return spotsState;
     case POST_SPOT:
+      spotsState.allSpots = { ...state.allSpots };
       spotsState.allSpots[action.spot.id] = action.spot;
       spotsState.singleSpot = action.spot;
       return spotsState;
     case POST_SPOT_IMAGE:
+      spotsState.allSpots = { ...state.allSpots };
       if (!spotsState.singleSpot.SpotImages)
         spotsState.singleSpot.SpotImages = [];
       spotsState.singleSpot.SpotImages.push(action.spotImage);
       return spotsState;
     case DELETE_SPOT:
+      spotsState.allSpots = { ...state.allSpots };
+      spotsState.singleSpot = { ...state.singleSpot };
       delete spotsState.allSpots[action.id];
-      const newState = {
-        ...spotsState,
-        singleSpot: { ...spotsState.singleSpot },
-        allSpots: { ...spotsState.allSpots },
-      };
-      return newState;
-    case DELETE_SPOT_IMAGE:
+      if (spotsState.singleSpot.id === action.id) delete spotsState.singleSpot;
+      return spotsState;
     default:
-      return state;
+      return spotsState;
   }
 };
 

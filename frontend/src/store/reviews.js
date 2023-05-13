@@ -81,24 +81,23 @@ const reviewsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_SPOT_REVIEWS:
       reviewsState.spot = {};
-      reviewsState.user = {};
+      reviewsState.user = { ...state.user };
       action.reviews.forEach((review) => {
         reviewsState.spot[review.id] = review;
       });
       return reviewsState;
     case POST_SPOT_REVIEW:
+      reviewsState.spot = { ...state.user };
+      reviewsState.user = { ...state.user };
       reviewsState.spot[action.review.spotId] = action.review;
       reviewsState.user[action.review.userId] = action.review;
       return reviewsState;
     case DELETE_REVIEW:
+      reviewsState.spot = { ...state.spot };
+      reviewsState.user = { ...state.user };
       delete reviewsState.spot[action.id];
       delete reviewsState.user[action.id];
-      const newState = {
-        ...reviewsState,
-        spot: { ...reviewsState.spot },
-        user: { ...reviewsState.user },
-      };
-      return newState;
+      return reviewsState;
     default:
       return reviewsState;
   }

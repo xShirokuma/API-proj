@@ -1,4 +1,3 @@
-// SOLUTION ONLY FILE
 import { useEffect, useState } from "react";
 
 import "./StarRatingInput.css";
@@ -9,6 +8,7 @@ const StarRatingInput = ({ rating, disabled, onChange }) => {
   useEffect(() => {
     setActiveRating(rating);
   }, [rating]);
+  // IDK IF THIS IS NEEDED SO I'M LEAVING IT HERE
   // NOTE: This useEffect isn't necessary to have for this scenario, but if you
   // have a scenario which requires this input to be re-rendered with an updated
   // rating prop instead of unmounted and remounted with an updated rating, then
@@ -17,6 +17,7 @@ const StarRatingInput = ({ rating, disabled, onChange }) => {
   const starsIcon = (number) => {
     const props = {};
     if (!disabled) {
+      console.log("test");
       props.onMouseEnter = () => setActiveRating(number);
       props.onMouseLeave = () => setActiveRating(rating);
       props.onClick = () => onChange(number);
