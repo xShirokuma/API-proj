@@ -8,9 +8,7 @@ const ReviewItem = ({ reviewObj }) => {
 
   return (
     <div className="review-item">
-      <div className="review-user">
-        {firstName} {lastName}
-      </div>
+      <div className="review-user">{firstName}</div>
       <div className="review-timestamp">{createdAt}</div>
       <div className="review-review">{review}</div>
     </div>

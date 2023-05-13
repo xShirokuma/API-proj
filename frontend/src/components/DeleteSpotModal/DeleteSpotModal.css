@@ -1,0 +1,7 @@
+button.delete-spot {
+ background-color: red;
+}
+
+button.cancel-delete-spot {
+  background-color: darkgray;
+ }

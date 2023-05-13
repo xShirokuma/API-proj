@@ -77,11 +77,11 @@ export const createSpotThunk = (spot) => async (dispatch) => {
     body: JSON.stringify(spot),
   };
 
+  console.log(spot);
   try {
     const res = await csrfFetch("/api/spots", options);
 
     if (res.ok) {
-      console.log("test");
       const newSpot = await res.json();
       dispatch(postSpot(spot));
       return newSpot;

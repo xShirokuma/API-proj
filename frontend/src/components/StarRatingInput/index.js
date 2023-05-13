@@ -17,7 +17,6 @@ const StarRatingInput = ({ rating, disabled, onChange }) => {
   const starsIcon = (number) => {
     const props = {};
     if (!disabled) {
-      console.log("test");
       props.onMouseEnter = () => setActiveRating(number);
       props.onMouseLeave = () => setActiveRating(rating);
       props.onClick = () => onChange(number);

@@ -1,3 +1,13 @@
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 32px;
+  width: 32px;
+}
+
 .nav-ul {
   padding: 2.5%;
   padding-bottom: 3%;
@@ -6,6 +16,10 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: solid 2px grey;
+}
+
+.profile-button {
+  cursor: pointer;
 }
 
 .hidden {

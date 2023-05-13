@@ -37,12 +37,9 @@ const ReviewForm = ({ reviewObj, formType }) => {
       const newReview = await dispatch(
         createSpotReviewThunk(reviewObj, spotId)
       );
-
-      if (newReview.errors) {
-        setErrors(newReview.errors);
-      }
     }
 
+    // DO I NEED THIS?
     // IMPORTANT: Need to await this, otherwise the closeForm will happen first
     // and the review will get updated at the same time as closing form. the
     // review will not get updated after form is closed.

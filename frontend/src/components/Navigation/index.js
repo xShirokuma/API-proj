@@ -4,17 +4,20 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
+import laser from "./laser.png";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
     <ul className="nav-ul">
-      <li>
+      <li className="logo">
         <NavLink exact to="/">
+          <img className="logo-img" src={laser}></img>
           aircnc
         </NavLink>
       </li>
+
       {isLoaded && (
         <li>
           {sessionUser && (
