@@ -8,7 +8,12 @@ const SpotItem = ({ spot }) => {
   else rating = spot?.avgRating?.toFixed(2);
 
   return (
-    <Link className="spot-link" key={spot?.id} to={`/spots/${spot?.id}`}>
+    <Link
+      className="spot-link"
+      title={spot.name}
+      key={spot?.id}
+      to={`/spots/${spot?.id}`}
+    >
       <img
         src={spot?.previewImage}
         alt="preview"

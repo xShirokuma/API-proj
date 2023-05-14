@@ -13,18 +13,21 @@ import DeleteReviewModal from "../DeleteReviewModal";
 
 const SpotDetails = () => {
   const state = useSelector((state) => state);
+  const sessionState = state.session;
   const spotsState = state.spots;
   const reviewsState = state.reviews;
   const dispatch = useDispatch();
   const { id } = useParams();
 
+  const spot = spotsState.singleSpot;
+  const userId = sessionState?.user?.id;
+  const ownerId = spot.ownerId;
+  const reviews = Object.values(reviewsState.spot);
+
   useEffect(() => {
     dispatch(getSingleSpotThunk(id));
     dispatch(getSpotReviewsThunk(id));
   }, [dispatch, id]);
-
-  const spot = spotsState.singleSpot;
-  const reviews = Object.values(reviewsState.spot);
 
   if (!spot) return;
   if (!reviews) return;
@@ -42,6 +45,29 @@ const SpotDetails = () => {
     if (numReviews === 1) numReviewsText = "Review";
     else numReviewsText = "Reviews";
   }
+
+  const userIsSpotOwner = () => {
+    if (userId === ownerId) return true;
+    return false;
+  };
+
+  const userHasPostedReview = () => {
+    if (reviews.find((review) => review.userId === userId)) return true;
+    return false;
+  };
+
+  const userIsReviewOwner = (review) => {
+    if (userId === review.userId) return true;
+    return false;
+  };
+
+  const spotHasReviews = () => {
+    return reviews.length;
+  };
+
+  const reviewButtonText = spotHasReviews()
+    ? "Post Your Review"
+    : "Be the first to post a review!";
 
   return (
     <div className="spot-details-container">
@@ -125,20 +151,24 @@ const SpotDetails = () => {
         </div>
       </div>
       <div className="reviews-create-button">
-        <OpenModalButton
-          buttonText="Post Your Review"
-          modalComponent={<CreateReviewModal formType="Submit Your Review" />}
-        />
+        {sessionState.user && !userIsSpotOwner() && !userHasPostedReview() && (
+          <OpenModalButton
+            buttonText={reviewButtonText}
+            modalComponent={<CreateReviewModal formType="Submit Your Review" />}
+          />
+        )}
       </div>
       <div>
         {reviews.reverse().map((review) => (
           <div className={`review-container-${review.id}`}>
             <ReviewItem reviewObj={review} key={`reviewitem-${review.id}`} />
-            <OpenModalButton
-              key={`review-delete-button-${review.id}`}
-              buttonText="Delete"
-              modalComponent={<DeleteReviewModal id={review.id} />}
-            />
+            {sessionState.user && userIsReviewOwner(review) && (
+              <OpenModalButton
+                key={`review-delete-button-${review.id}`}
+                buttonText="Delete"
+                modalComponent={<DeleteReviewModal id={review.id} />}
+              />
+            )}
           </div>
         ))}
       </div>

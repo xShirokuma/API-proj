@@ -11,15 +11,15 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul className="nav-ul">
-      <li className="logo">
-        <NavLink exact to="/">
+      <li>
+        <NavLink className="logo" exact to="/">
           <img className="logo-img" src={laser}></img>
           aircnc
         </NavLink>
       </li>
 
       {isLoaded && (
-        <li>
+        <li className="nav-profile">
           {sessionUser && (
             <NavLink exact to="/spots/new">
               Create a New Spot

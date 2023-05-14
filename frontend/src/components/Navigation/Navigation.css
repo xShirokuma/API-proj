@@ -1,6 +1,10 @@
 .logo {
   display: flex;
   align-items: center;
+  font-size: 20px;
+  color: #ff385c;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .logo-img {
@@ -15,11 +19,50 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid 2px grey;
+  border-bottom: solid 1px #dddddd;
+}
+
+.nav-profile > * {
+  margin: 0 10px;
 }
 
 .profile-button {
-  cursor: pointer;
+  display: inline-flex;
+  border: 1pt solid grey;
+  border-radius: 30px;
+  height: 40px;
+  width: 80px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.fa-bars {
+  font-size: 20px;
+  color: grey;
+}
+
+.fa-user-circle {
+  font-size: 30px;
+  color: grey;
+}
+
+.profile-dropdown {
+  background-color: #ffffff;
+  border: 1pt solid #dddddd;
+  border-radius: 10px;
+  box-shadow: 1px 1px 1px #dddddd;
+  position: relative;
+  top: 5px;
+  z-index: 1;
+}
+
+.profile-dropdown > * {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-dropdown > a:hover {
+  background-color: #dddddd;
 }
 
 .hidden {

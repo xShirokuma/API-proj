@@ -2,10 +2,10 @@
   display: flex;
 }
 
-div.filled {
+div.filled > * {
   color: gold
 }
 
-div.empty {
+div.empty > * {
  color: grey;
 }

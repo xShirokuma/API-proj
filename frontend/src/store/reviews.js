@@ -45,15 +45,17 @@ export const createSpotReviewThunk = (review, spotId) => async (dispatch) => {
     body: JSON.stringify(review),
   };
 
-  const res = await csrfFetch(`/api/spots/${spotId}/reviews`, options);
+  const postres = await csrfFetch(`/api/spots/${spotId}/reviews`, options);
+
+  const res = await fetch(`/api/spots/${spotId}/reviews`);
 
   if (res.ok) {
-    const newReview = await res.json();
-    dispatch(postSpotReview(newReview));
-    return newReview;
+    const reviewsObj = await res.json();
+    dispatch(getSpotReviews(reviewsObj.Reviews));
+  } else {
+    const errors = await res.json();
+    return errors;
   }
-  const errors = await res.json();
-  return errors;
 };
 
 export const deleteReviewThunk = (id) => async (dispatch) => {

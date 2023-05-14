@@ -16,6 +16,7 @@ const ReviewForm = ({ reviewObj, formType }) => {
   const spot = state.spots.singleSpot;
 
   useEffect(() => {
+    // TODO: Fix this
     if (review.length < 10)
       errors.review = "Review must be at least 10 characters.";
     if (!stars) errors.stars = "Please set a rating.";
@@ -25,7 +26,7 @@ const ReviewForm = ({ reviewObj, formType }) => {
     e.preventDefault();
     setErrors({});
 
-    reviewObj = {
+    let _reviewObj = {
       ...reviewObj,
       review,
       stars,
@@ -35,7 +36,7 @@ const ReviewForm = ({ reviewObj, formType }) => {
 
     if (formType === "Submit Your Review") {
       const newReview = await dispatch(
-        createSpotReviewThunk(reviewObj, spotId)
+        createSpotReviewThunk(_reviewObj, spotId)
       );
     }
 
@@ -51,15 +52,20 @@ const ReviewForm = ({ reviewObj, formType }) => {
     setStars(parseInt(number));
   };
 
+  const disabled = review.length < 10;
+
   return (
     <form onSubmit={handleSubmit}>
       <textarea
         name="description"
         onChange={(e) => setReview(e.target.value)}
         value={review}
+        placeholder="Leave your review here..."
       ></textarea>
       <StarRatingInput rating={stars} disabled={false} onChange={onChange} />
-      <button type="submit">{formType}</button>
+      <button type="submit" disabled={disabled}>
+        {formType}
+      </button>
     </form>
   );
 };
