@@ -19,7 +19,7 @@ const SpotIndex = () => {
 
   return (
     <div className="spots-container">
-      {spots.map((spot) => (
+      {spots.reverse().map((spot) => (
         <SpotItem spot={spot} key={spot.id} />
       ))}
     </div>

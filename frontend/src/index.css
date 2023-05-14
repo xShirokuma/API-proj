@@ -1,8 +1,26 @@
 /* TODO Add site wide styles */
 * {
-  font-family: 'Helvetica', 'Arial', sans-serif
+  font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+ul {
+  padding: 1%;
+}
+
+a {
+  color: black;
+  text-decoration: none;
 }
 
 li {
   list-style-type: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
 }

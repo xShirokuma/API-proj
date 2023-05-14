@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import {
@@ -11,7 +11,7 @@ import {
 import "./SpotForm.css";
 
 const SpotForm = ({ spot, formType }) => {
-  const singleSpotObj = useSelector((state) => state.spots.singleSpot);
+  // const singleSpotObj = useSelector((state) => state.spots.singleSpot);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -27,12 +27,52 @@ const SpotForm = ({ spot, formType }) => {
   const [img2, setImg2] = useState("");
   const [img3, setImg3] = useState("");
   const [img4, setImg4] = useState("");
+  const [attemptSubmitted, setAttemptSubmitted] = useState(false);
 
   const [errors, setErrors] = useState({});
 
+  const validateErrors = useCallback(() => {
+    const errorHandler = {};
+    if (!country.length) errorHandler.country = "Country is required";
+    if (!state.length) errorHandler.state = "State is required";
+    if (!city.length) errorHandler.city = "City is required";
+    if (!address.length) errorHandler.address = "Address is required";
+    if (description.length < 30)
+      errorHandler.description = "Description must be at least 30 characters";
+    if (!name.length) errorHandler.name = "Name is required";
+    if (price < 1 || isNaN(price)) errorHandler.price = "Price is required";
+
+    if (formType !== "Update Spot") {
+      if (!previewImage.length)
+        errorHandler.preview = "Preview image is required";
+    }
+    if (attemptSubmitted) setErrors(errorHandler);
+    if (Object.keys(errorHandler).length !== 0) {
+      return false;
+    } else return true;
+  }, [
+    attemptSubmitted,
+    country,
+    state,
+    city,
+    address,
+    description,
+    name,
+    price,
+    previewImage,
+    formType,
+  ]);
+
+  useEffect(() => {
+    validateErrors();
+  }, [validateErrors]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({});
+    setAttemptSubmitted(true);
+    if (!validateErrors()) {
+      return;
+    }
 
     spot = {
       ...spot,
@@ -55,7 +95,14 @@ const SpotForm = ({ spot, formType }) => {
     let spotId;
 
     if (formType === "Create Spot") {
+      console.log(`spotform98: ${spot}`);
+      for (const key of Object.keys(spot)) {
+        console.log(`${key}: ${spot.key}`);
+      }
       const newSpot = await dispatch(createSpotThunk(spot));
+
+      console.log(`newSpot Return: ${newSpot}`);
+
       spotId = newSpot.id;
 
       img.spotId = spotId;
@@ -101,7 +148,7 @@ const SpotForm = ({ spot, formType }) => {
     <form onSubmit={handleSubmit}>
       <h3>Where's your place located?</h3>
       <h5>
-        Guests will only get your exact address once they book a reservation.
+        Guests will only get your exact address once they booked a reservation.
       </h5>
       <label>
         <div className="errors">{errors.country}</div>
@@ -149,6 +196,7 @@ const SpotForm = ({ spot, formType }) => {
         name="description"
         onChange={(e) => setDescription(e.target.value)}
         value={description}
+        placeholder="Please write at least 30 characters"
       ></textarea>
       <div className="errors">{errors.description}</div>
       <h3>Create a title for your spot</h3>
@@ -161,6 +209,7 @@ const SpotForm = ({ spot, formType }) => {
         <input
           type="text"
           value={name}
+          placeholder="Name of your spot"
           onChange={(e) => setName(e.target.value)}
         />
       </label>
@@ -175,6 +224,7 @@ const SpotForm = ({ spot, formType }) => {
         <input
           type="number"
           value={price}
+          placeholder="Price per night (USD)"
           onChange={(e) => setPrice(e.target.value)}
         />
       </label>
@@ -188,6 +238,7 @@ const SpotForm = ({ spot, formType }) => {
             <input
               type="text"
               value={previewImage}
+              placeholder="Preview Image URL"
               onChange={(e) => setPreviewImage(e.target.value)}
             />
           </label>
@@ -197,6 +248,7 @@ const SpotForm = ({ spot, formType }) => {
             <input
               type="text"
               value={img1}
+              placeholder="Image URL"
               onChange={(e) => setImg1(e.target.value)}
             />
           </label>
@@ -206,6 +258,7 @@ const SpotForm = ({ spot, formType }) => {
             <input
               type="text"
               value={img2}
+              placeholder="Image URL"
               onChange={(e) => setImg2(e.target.value)}
             />
           </label>
@@ -215,6 +268,7 @@ const SpotForm = ({ spot, formType }) => {
             <input
               type="text"
               value={img3}
+              placeholder="Image URL"
               onChange={(e) => setImg3(e.target.value)}
             />
           </label>
@@ -224,6 +278,7 @@ const SpotForm = ({ spot, formType }) => {
             <input
               type="text"
               value={img4}
+              placeholder="Image URL"
               onChange={(e) => setImg4(e.target.value)}
             />
           </label>

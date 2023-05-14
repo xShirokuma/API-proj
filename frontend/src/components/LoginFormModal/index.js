@@ -25,10 +25,13 @@ function LoginFormModal() {
       });
   };
 
+  const disabled = credential.length < 4 || password.length < 6;
+
   return (
     <>
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
+        {errors.credential && <div>The provided credentials were invalid.</div>}
         <label>
           Username or Email
           <input
@@ -47,8 +50,29 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+
+        <button type="submit" disabled={disabled}>
+          Log In
+        </button>
+        <h2
+          onClick={() => {
+            dispatch(
+              sessionActions.login({
+                credential: "Demo-lition",
+                password: "password",
+              })
+            )
+              .then(closeModal)
+              .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) {
+                  setErrors(data.errors);
+                }
+              });
+          }}
+        >
+          Demo User
+        </h2>
       </form>
     </>
   );

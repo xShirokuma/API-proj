@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
 
+import StarRatingInput from "../StarRatingInput";
 import { createSpotReviewThunk } from "../../store/reviews";
 
 const ReviewForm = ({ reviewObj, formType }) => {
@@ -12,11 +13,20 @@ const ReviewForm = ({ reviewObj, formType }) => {
   const [review, setReview] = useState(reviewObj?.review);
   const [stars, setStars] = useState(reviewObj?.stars);
 
+  const spot = state.spots.singleSpot;
+
+  useEffect(() => {
+    // TODO: Fix this
+    if (review.length < 10)
+      errors.review = "Review must be at least 10 characters.";
+    if (!stars) errors.stars = "Please set a rating.";
+  }, [review, stars]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
 
-    reviewObj = {
+    let _reviewObj = {
       ...reviewObj,
       review,
       stars,
@@ -26,14 +36,11 @@ const ReviewForm = ({ reviewObj, formType }) => {
 
     if (formType === "Submit Your Review") {
       const newReview = await dispatch(
-        createSpotReviewThunk(reviewObj, spotId)
+        createSpotReviewThunk(_reviewObj, spotId)
       );
-
-      if (newReview.errors) {
-        setErrors(newReview.errors);
-      }
     }
 
+    // DO I NEED THIS?
     // IMPORTANT: Need to await this, otherwise the closeForm will happen first
     // and the review will get updated at the same time as closing form. the
     // review will not get updated after form is closed.
@@ -41,21 +48,24 @@ const ReviewForm = ({ reviewObj, formType }) => {
     closeModal();
   };
 
+  const onChange = (number) => {
+    setStars(parseInt(number));
+  };
+
+  const disabled = review.length < 10;
+
   return (
     <form onSubmit={handleSubmit}>
       <textarea
         name="description"
         onChange={(e) => setReview(e.target.value)}
         value={review}
+        placeholder="Leave your review here..."
       ></textarea>
-      <label>
-        <input
-          type="number"
-          value={stars}
-          onChange={(e) => setStars(e.target.value)}
-        />
-      </label>
-      <button type="submit">{formType}</button>
+      <StarRatingInput rating={stars} disabled={false} onChange={onChange} />
+      <button type="submit" disabled={disabled}>
+        {formType}
+      </button>
     </form>
   );
 };

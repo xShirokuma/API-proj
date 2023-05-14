@@ -1,4 +1,3 @@
-// SOLUTION ONLY FILE
 import { useEffect, useState } from "react";
 
 import "./StarRatingInput.css";
@@ -9,6 +8,7 @@ const StarRatingInput = ({ rating, disabled, onChange }) => {
   useEffect(() => {
     setActiveRating(rating);
   }, [rating]);
+  // IDK IF THIS IS NEEDED SO I'M LEAVING IT HERE
   // NOTE: This useEffect isn't necessary to have for this scenario, but if you
   // have a scenario which requires this input to be re-rendered with an updated
   // rating prop instead of unmounted and remounted with an updated rating, then
@@ -35,6 +35,7 @@ const StarRatingInput = ({ rating, disabled, onChange }) => {
   return (
     <div className="rating-input">
       {[1, 2, 3, 4, 5].map((number) => starsIcon(number))}
+      <label>Stars</label>
     </div>
   );
 };

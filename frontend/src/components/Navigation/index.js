@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
+import laser from "./laser.png";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -11,12 +12,14 @@ function Navigation({ isLoaded }) {
   return (
     <ul className="nav-ul">
       <li>
-        <NavLink exact to="/">
+        <NavLink className="logo" exact to="/">
+          <img className="logo-img" src={laser}></img>
           aircnc
         </NavLink>
       </li>
+
       {isLoaded && (
-        <li>
+        <li className="nav-profile">
           {sessionUser && (
             <NavLink exact to="/spots/new">
               Create a New Spot

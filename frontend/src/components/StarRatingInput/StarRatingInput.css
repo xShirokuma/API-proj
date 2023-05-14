@@ -1,3 +1,11 @@
 .rating-input {
   display: flex;
 }
+
+div.filled > * {
+  color: gold
+}
+
+div.empty > * {
+ color: grey;
+}

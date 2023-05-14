@@ -9,7 +9,7 @@ const CreateReviewModal = ({ formType }) => {
   const dispatch = useDispatch();
 
   const reviewObj = {
-    stars: 1,
+    stars: 0,
     review: "",
   };
 

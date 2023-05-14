@@ -1,0 +1,7 @@
+button.delete-review {
+  background-color: red;
+}
+
+button.cancel-delete-review {
+  background-color: darkgray;
+}
