@@ -11,6 +11,16 @@ import { getSpotReviewsThunk } from "../../store/reviews";
 import "./SpotDetails.css";
 import DeleteReviewModal from "../DeleteReviewModal";
 
+function ReviewsContainer({ numReviews, avgStarRating }) {
+  return (
+    <div className="reviews">
+      {numReviews === 0 && "New"}
+      {numReviews === 1 && `${avgStarRating} · Review`}
+      {numReviews > 1 && `${avgStarRating} · Reviews`}
+    </div>
+  );
+}
+
 const SpotDetails = () => {
   const state = useSelector((state) => state);
   const sessionState = state.session;
@@ -36,15 +46,15 @@ const SpotDetails = () => {
   const spotImages = [...spot?.SpotImages];
   const { firstName, lastName } = spot?.Owner;
 
-  const numReviews = spot.numReviews;
-  let rating;
-  let numReviewsText = "";
-  if (numReviews < 1) rating = "New";
-  else {
-    rating = spot.avgStarRating.toFixed(2);
-    if (numReviews === 1) numReviewsText = "Review";
-    else numReviewsText = "Reviews";
-  }
+  // const numReviews = spot.numReviews;
+  // let rating;
+  // let numReviewsText = "";
+  // if (numReviews < 1) rating = "New";
+  // else {
+  //   rating = spot.avgStarRating.toFixed(2);
+  //   if (numReviews === 1) numReviewsText = "Review";
+  //   else numReviewsText = "Reviews";
+  // }
 
   const userIsSpotOwner = () => {
     if (userId === ownerId) return true;
@@ -128,7 +138,10 @@ const SpotDetails = () => {
                   <i className="fa-solid fa-star"></i>
                 </div>
                 <div className="reviews">
-                  {rating} · {spot.numReviews} {numReviewsText}
+                  <ReviewsContainer
+                    numReviews={spot.numReviews}
+                    avgStarRating={spot.avgStarRating?.toFixed(2)}
+                  />
                 </div>
               </div>
             </div>
@@ -145,9 +158,10 @@ const SpotDetails = () => {
           <div className="rating">
             <i className="fa-solid fa-star"></i>
           </div>
-          <div className="reviews">
-            {rating} · {spot.numReviews} {numReviewsText}
-          </div>
+          <ReviewsContainer
+            numReviews={spot.numReviews}
+            avgStarRating={spot.avgStarRating?.toFixed(2)}
+          />
         </div>
       </div>
       <div className="reviews-create-button">
@@ -166,7 +180,9 @@ const SpotDetails = () => {
               <OpenModalButton
                 key={`review-delete-button-${review.id}`}
                 buttonText="Delete"
-                modalComponent={<DeleteReviewModal id={review.id} />}
+                modalComponent={
+                  <DeleteReviewModal id={review.id} spotId={spot.id} />
+                }
               />
             )}
           </div>

@@ -1,17 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { useModal } from "../../context/Modal";
 import { deleteReviewThunk } from "../../store/reviews";
+import { getSingleSpotThunk } from "../../store/spots";
 
 import "./DeleteReviewModal.css";
 
-const DeleteReviewModal = ({ id }) => {
-  const state = useSelector((state) => state);
+const DeleteReviewModal = ({ id, spotId }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
   const deleteReview = (id) => {
-    return dispatch(deleteReviewThunk(id)).then(closeModal);
+    return dispatch(deleteReviewThunk(id))
+      .then(dispatch(getSingleSpotThunk(spotId)))
+      .then(closeModal);
   };
 
   return (

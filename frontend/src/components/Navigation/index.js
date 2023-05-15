@@ -13,7 +13,7 @@ function Navigation({ isLoaded }) {
     <ul className="nav-ul">
       <li>
         <NavLink className="logo" exact to="/">
-          <img className="logo-img" src={laser}></img>
+          <img className="logo-img" alt="logo" src={laser}></img>
           aircnc
         </NavLink>
       </li>
