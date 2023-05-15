@@ -46,16 +46,14 @@ const ReviewForm = ({ reviewObj, formType }) => {
 
     const spotId = state.spots.singleSpot.id;
 
-    if (formType === "Submit Your Review")
-      dispatch(createSpotReviewThunk(_reviewObj, spotId));
-
-    dispatch(getSingleSpotThunk(spotId));
-
-    // DO I NEED THIS?
-    // IMPORTANT: Need to await this, otherwise the closeForm will happen first
-    // and the review will get updated at the same time as closing form. the
-    // review will not get updated after form is closed.
-    // await dispatch(onSubmit({ ...review, rating }));
+    if (formType === "Submit Your Review") {
+      // IMPORTANT: Need to await this, otherwise the closeForm will happen first
+      // and the review will get updated at the same time as closing form. the
+      // review will not get updated after form is closed.
+      // await dispatch(onSubmit({ ...review, rating }));
+      await dispatch(createSpotReviewThunk(_reviewObj, spotId));
+      await dispatch(getSingleSpotThunk(spotId));
+    }
     closeModal();
   };
 

@@ -15,8 +15,9 @@ function ReviewsContainer({ numReviews, avgStarRating }) {
   return (
     <div className="reviews">
       {numReviews === 0 && "New"}
-      {numReviews === 1 && `${avgStarRating} · Review`}
-      {numReviews > 1 && `${avgStarRating} · Reviews`}
+      {console.log(avgStarRating)}
+      {numReviews === 1 && `${avgStarRating.toFixed(2)} · ${numReviews} Review`}
+      {numReviews > 1 && `${avgStarRating.toFixed(2)} · ${numReviews} Reviews`}
     </div>
   );
 }
@@ -142,7 +143,7 @@ const SpotDetails = () => {
                 <div className="reviews">
                   <ReviewsContainer
                     numReviews={spot.numReviews}
-                    avgStarRating={spot.avgStarRating?.toFixed(2)}
+                    avgStarRating={spot.avgStarRating}
                   />
                 </div>
               </div>
@@ -162,7 +163,7 @@ const SpotDetails = () => {
           </div>
           <ReviewsContainer
             numReviews={spot.numReviews}
-            avgStarRating={spot.avgStarRating?.toFixed(2)}
+            avgStarRating={spot.avgStarRating}
           />
         </div>
       </div>

@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteSpotThunk,
-  getSingleSpotThunk,
-  getUserSpotsThunk,
-} from "../../store/spots";
+import { getUserSpotsThunk } from "../../store/spots";
 import SpotItem from "../SpotItem";
 import { useHistory } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
@@ -22,7 +18,7 @@ const ManageSpots = () => {
 
   useEffect(() => {
     dispatch(getUserSpotsThunk(sessionUser));
-  }, [dispatch]);
+  }, [dispatch, sessionUser]);
 
   const createNewSpot = () => {
     history.push("/spots/new");

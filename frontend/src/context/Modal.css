@@ -21,4 +21,26 @@
 #modal-content {
   position: absolute;
   background-color: white;
+  /* height: 25vh;
+  width: 35vw; */
+  padding: 1em;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+  gap: 1em;
+}
+
+#modal-content h1 {
+  margin: 0.25% 0;
+}
+
+#modal-content * {
+  width: 100%;
+  text-align: center;
+}
+
+#modal-content input {
+  box-sizing: border-box;
 }

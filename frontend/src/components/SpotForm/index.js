@@ -44,7 +44,7 @@ const SpotForm = ({ spot, formType }) => {
 
     if (formType !== "Update Spot") {
       if (!previewImage.length)
-        errorHandler.preview = "Preview image is required";
+        errorHandler.previewImage = "Preview image is required";
     }
     if (attemptSubmitted) setErrors(errorHandler);
     if (Object.keys(errorHandler).length !== 0) {
@@ -151,8 +151,8 @@ const SpotForm = ({ spot, formType }) => {
         Guests will only get your exact address once they booked a reservation.
       </h5>
       <label>
-        <div className="errors">{errors.country}</div>
         Country
+        <span className="errors"> {errors.country}</span>
         <input
           className="country"
           type="text"
@@ -160,27 +160,27 @@ const SpotForm = ({ spot, formType }) => {
           onChange={(e) => setCountry(e.target.value)}
         />
       </label>
-      <div className="errors">{errors.address}</div>
       <label>
         Street Address
+        <span className="errors"> {errors.address}</span>
         <input
           type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
       </label>
-      <div className="errors">{errors.city}</div>
       <label>
         City
+        <span className="errors"> {errors.city}</span>
         <input
           type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
       </label>
-      <div className="errors">{errors.state}</div>
       <label>
         State
+        <span className="errors"> {errors.state}</span>
         <input
           type="text"
           value={state}
@@ -219,22 +219,23 @@ const SpotForm = ({ spot, formType }) => {
         Competitive pricing can help your listing stand out and rank higher in
         search results.
       </h4>
-      <label>
-        $
+      <div className="errors">{errors.price}</div>
+      <div className="price">
+        <label>$</label>
         <input
           type="number"
           value={price}
           placeholder="Price per night (USD)"
           onChange={(e) => setPrice(e.target.value)}
         />
-      </label>
-      <div className="errors">{errors.price}</div>
+      </div>
       {formType === "Create Spot" && (
         <>
           <h3>Liven up your spot with photos</h3>
           <h4>Submit a link to at least one photo to publish your spot.</h4>
           <label>
             Preview Img
+            <span className="errors"> {errors.previewImage}</span>
             <input
               type="text"
               value={previewImage}
@@ -242,7 +243,6 @@ const SpotForm = ({ spot, formType }) => {
               onChange={(e) => setPreviewImage(e.target.value)}
             />
           </label>
-          <div className="errors">{errors.previewImage}</div>
           <label>
             Img1
             <input
