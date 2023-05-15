@@ -10,10 +10,10 @@ const DeleteReviewModal = ({ id, spotId }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
-  const deleteReview = (id) => {
-    return dispatch(deleteReviewThunk(id))
-      .then(dispatch(getSingleSpotThunk(spotId)))
-      .then(closeModal);
+  const deleteReview = async (id) => {
+    await dispatch(deleteReviewThunk(id));
+    await dispatch(getSingleSpotThunk(spotId));
+    closeModal();
   };
 
   return (
