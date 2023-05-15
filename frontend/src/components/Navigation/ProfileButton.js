@@ -61,7 +61,7 @@ function ProfileButton({ user }) {
             </li>
           </>
         ) : (
-          <>
+          <React.Fragment className="profile-dropdown-buttons">
             <OpenModalMenuItem
               itemText="Log In"
               onItemClick={closeMenu}
@@ -72,7 +72,7 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
-          </>
+          </React.Fragment>
         )}
       </ul>
     </>

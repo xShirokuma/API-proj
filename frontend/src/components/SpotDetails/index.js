@@ -93,28 +93,28 @@ const SpotDetails = () => {
             referrerPolicy="no-referrer"
           ></img>
         </div>
-        <div className="img1">
+        <div className="spot-small-img">
           <img
             src={spotImages[1]?.url}
             alt="spot alt"
             referrerPolicy="no-referrer"
           ></img>
         </div>
-        <div className="img2">
+        <div className="spot-small-img">
           <img
             src={spotImages[2]?.url}
             alt="spot alt"
             referrerPolicy="no-referrer"
           ></img>
         </div>
-        <div className="img3">
+        <div className="spot-small-img">
           <img
             src={spotImages[3]?.url}
             alt="spot alt"
             referrerPolicy="no-referrer"
           ></img>
         </div>
-        <div className="img4">
+        <div className="spot-small-img">
           <img
             src={spotImages[4]?.url}
             alt="spot alt"
@@ -132,7 +132,9 @@ const SpotDetails = () => {
         <div>
           <div className="booking-container">
             <div className="booking-stats">
-              <div className="price">${spot.price} night</div>
+              <div className="price">
+                <span id="price">${spot.price}</span> night
+              </div>
               <div className="ratings-reviews-container">
                 <div className="rating">
                   <i className="fa-solid fa-star"></i>
@@ -154,7 +156,7 @@ const SpotDetails = () => {
         </div>
       </div>
       <div className="reviews-container">
-        <div className="ratings-reviews-container">
+        <div className="ratings-reviews-container" id="review-one-forreal">
           <div className="rating">
             <i className="fa-solid fa-star"></i>
           </div>
@@ -172,9 +174,9 @@ const SpotDetails = () => {
           />
         )}
       </div>
-      <div>
+      <div className="all-reviews">
         {reviews.reverse().map((review) => (
-          <div className={`review-container-${review.id}`}>
+          <div className={`review-container`}>
             <ReviewItem reviewObj={review} key={`reviewitem-${review.id}`} />
             {sessionState.user && userIsReviewOwner(review) && (
               <OpenModalButton
