@@ -134,7 +134,7 @@ const SpotDetails = () => {
           <div className="booking-container">
             <div className="booking-stats">
               <div className="price">
-                <span id="price">${spot.price}</span> night
+                <span id="price">${spot.price}</span>night
               </div>
               <div className="ratings-reviews-container">
                 <div className="rating">
