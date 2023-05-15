@@ -1,0 +1,17 @@
+#login-form {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+}
+
+#demo-user-button {
+  font-size: 1.25em;
+  text-decoration: underline;
+}
+
+#login-form button[type="submit"] {
+  padding: 2.5% 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

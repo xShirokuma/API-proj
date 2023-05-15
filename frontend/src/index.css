@@ -24,3 +24,11 @@ textarea {
   resize: none;
   width: 100%;
 }
+
+.errors {
+  color: red;
+}
+
+input {
+  background-color: lightblue;
+}

@@ -51,8 +51,9 @@
   border: 1pt solid #dddddd;
   border-radius: 10px;
   box-shadow: 1px 1px 1px #dddddd;
-  position: relative;
-  top: 5px;
+  position: absolute;
+  right: 1em;
+  margin-top: 1em;
   z-index: 1;
 }
 
@@ -67,4 +68,8 @@
 
 .hidden {
   display: none
+}
+
+.nouser * {
+  cursor: pointer;
 }

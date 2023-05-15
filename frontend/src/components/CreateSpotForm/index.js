@@ -12,7 +12,7 @@ const CreateSpotForm = () => {
     lng: null,
     name: "",
     description: "",
-    price: 0,
+    price: "",
   };
 
   return (

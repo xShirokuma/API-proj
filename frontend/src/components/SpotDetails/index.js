@@ -11,6 +11,17 @@ import { getSpotReviewsThunk } from "../../store/reviews";
 import "./SpotDetails.css";
 import DeleteReviewModal from "../DeleteReviewModal";
 
+function ReviewsContainer({ numReviews, avgStarRating }) {
+  return (
+    <div className="reviews">
+      {numReviews === 0 && "New"}
+      {console.log(avgStarRating)}
+      {numReviews === 1 && `${avgStarRating.toFixed(2)} · ${numReviews} Review`}
+      {numReviews > 1 && `${avgStarRating.toFixed(2)} · ${numReviews} Reviews`}
+    </div>
+  );
+}
+
 const SpotDetails = () => {
   const state = useSelector((state) => state);
   const sessionState = state.session;
@@ -36,15 +47,15 @@ const SpotDetails = () => {
   const spotImages = [...spot?.SpotImages];
   const { firstName, lastName } = spot?.Owner;
 
-  const numReviews = spot.numReviews;
-  let rating;
-  let numReviewsText = "";
-  if (numReviews < 1) rating = "New";
-  else {
-    rating = spot.avgStarRating.toFixed(2);
-    if (numReviews === 1) numReviewsText = "Review";
-    else numReviewsText = "Reviews";
-  }
+  // const numReviews = spot.numReviews;
+  // let rating;
+  // let numReviewsText = "";
+  // if (numReviews < 1) rating = "New";
+  // else {
+  //   rating = spot.avgStarRating.toFixed(2);
+  //   if (numReviews === 1) numReviewsText = "Review";
+  //   else numReviewsText = "Reviews";
+  // }
 
   const userIsSpotOwner = () => {
     if (userId === ownerId) return true;
@@ -83,28 +94,28 @@ const SpotDetails = () => {
             referrerPolicy="no-referrer"
           ></img>
         </div>
-        <div className="img1">
+        <div className="spot-small-img">
           <img
             src={spotImages[1]?.url}
             alt="spot alt"
             referrerPolicy="no-referrer"
           ></img>
         </div>
-        <div className="img2">
+        <div className="spot-small-img">
           <img
             src={spotImages[2]?.url}
             alt="spot alt"
             referrerPolicy="no-referrer"
           ></img>
         </div>
-        <div className="img3">
+        <div className="spot-small-img">
           <img
             src={spotImages[3]?.url}
             alt="spot alt"
             referrerPolicy="no-referrer"
           ></img>
         </div>
-        <div className="img4">
+        <div className="spot-small-img">
           <img
             src={spotImages[4]?.url}
             alt="spot alt"
@@ -122,13 +133,18 @@ const SpotDetails = () => {
         <div>
           <div className="booking-container">
             <div className="booking-stats">
-              <div className="price">${spot.price} night</div>
+              <div className="price">
+                <span id="price">${spot.price}</span> night
+              </div>
               <div className="ratings-reviews-container">
                 <div className="rating">
                   <i className="fa-solid fa-star"></i>
                 </div>
                 <div className="reviews">
-                  {rating} · {spot.numReviews} {numReviewsText}
+                  <ReviewsContainer
+                    numReviews={spot.numReviews}
+                    avgStarRating={spot.avgStarRating}
+                  />
                 </div>
               </div>
             </div>
@@ -141,13 +157,14 @@ const SpotDetails = () => {
         </div>
       </div>
       <div className="reviews-container">
-        <div className="ratings-reviews-container">
+        <div className="ratings-reviews-container" id="review-one-forreal">
           <div className="rating">
             <i className="fa-solid fa-star"></i>
           </div>
-          <div className="reviews">
-            {rating} · {spot.numReviews} {numReviewsText}
-          </div>
+          <ReviewsContainer
+            numReviews={spot.numReviews}
+            avgStarRating={spot.avgStarRating}
+          />
         </div>
       </div>
       <div className="reviews-create-button">
@@ -158,15 +175,17 @@ const SpotDetails = () => {
           />
         )}
       </div>
-      <div>
+      <div className="all-reviews">
         {reviews.reverse().map((review) => (
-          <div className={`review-container-${review.id}`}>
+          <div className={`review-container`}>
             <ReviewItem reviewObj={review} key={`reviewitem-${review.id}`} />
             {sessionState.user && userIsReviewOwner(review) && (
               <OpenModalButton
                 key={`review-delete-button-${review.id}`}
                 buttonText="Delete"
-                modalComponent={<DeleteReviewModal id={review.id} />}
+                modalComponent={
+                  <DeleteReviewModal id={review.id} spotId={spot.id} />
+                }
               />
             )}
           </div>

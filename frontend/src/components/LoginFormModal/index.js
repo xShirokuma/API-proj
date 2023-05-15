@@ -30,8 +30,10 @@ function LoginFormModal() {
   return (
     <>
       <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        {errors.credential && <div>The provided credentials were invalid.</div>}
+      <form onSubmit={handleSubmit} id="login-form">
+        {errors.credential && (
+          <div className="errors">The provided credentials were invalid.</div>
+        )}
         <label>
           Username or Email
           <input
@@ -55,6 +57,7 @@ function LoginFormModal() {
           Log In
         </button>
         <h2
+          id="demo-user-button"
           onClick={() => {
             dispatch(
               sessionActions.login({

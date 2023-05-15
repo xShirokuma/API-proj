@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch, useSelector } from "react-redux";
 
 import StarRatingInput from "../StarRatingInput";
+import { getSingleSpotThunk } from "../../store/spots";
 import { createSpotReviewThunk } from "../../store/reviews";
 
 const ReviewForm = ({ reviewObj, formType }) => {
@@ -12,21 +13,32 @@ const ReviewForm = ({ reviewObj, formType }) => {
   const [errors, setErrors] = useState({});
   const [review, setReview] = useState(reviewObj?.review);
   const [stars, setStars] = useState(reviewObj?.stars);
+  const [attemptSubmitted, setAttemptSubmitted] = useState(false);
 
-  const spot = state.spots.singleSpot;
+  const validateErrors = useCallback(() => {
+    const errorHandler = {};
+    if (review.length < 10)
+      errorHandler.review = "Review must be at least 10 characters.";
+    if (!stars) errorHandler.stars = "Please set a rating.";
+    if (attemptSubmitted) setErrors(errorHandler);
+    if (Object.keys(errorHandler).length !== 0) {
+      return false;
+    }
+    return true;
+  }, [attemptSubmitted, review, stars]);
 
   useEffect(() => {
-    // TODO: Fix this
-    if (review.length < 10)
-      errors.review = "Review must be at least 10 characters.";
-    if (!stars) errors.stars = "Please set a rating.";
-  }, [review, stars]);
+    validateErrors();
+  }, [validateErrors]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({});
+    setAttemptSubmitted(true);
+    if (!validateErrors()) {
+      return;
+    }
 
-    let _reviewObj = {
+    const _reviewObj = {
       ...reviewObj,
       review,
       stars,
@@ -35,16 +47,13 @@ const ReviewForm = ({ reviewObj, formType }) => {
     const spotId = state.spots.singleSpot.id;
 
     if (formType === "Submit Your Review") {
-      const newReview = await dispatch(
-        createSpotReviewThunk(_reviewObj, spotId)
-      );
+      // IMPORTANT: Need to await this, otherwise the closeForm will happen first
+      // and the review will get updated at the same time as closing form. the
+      // review will not get updated after form is closed.
+      // await dispatch(onSubmit({ ...review, rating }));
+      await dispatch(createSpotReviewThunk(_reviewObj, spotId));
+      await dispatch(getSingleSpotThunk(spotId));
     }
-
-    // DO I NEED THIS?
-    // IMPORTANT: Need to await this, otherwise the closeForm will happen first
-    // and the review will get updated at the same time as closing form. the
-    // review will not get updated after form is closed.
-    // await dispatch(onSubmit({ ...review, rating }));
     closeModal();
   };
 
@@ -56,6 +65,8 @@ const ReviewForm = ({ reviewObj, formType }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="errors">{errors.review}</div>
+      <div className="errors">{errors.stars}</div>
       <textarea
         name="description"
         onChange={(e) => setReview(e.target.value)}

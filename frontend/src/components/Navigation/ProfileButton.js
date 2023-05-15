@@ -42,7 +42,8 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName =
+    `profile-dropdown ${user ? "" : "nouser"}` + (showMenu ? "" : " hidden");
 
   return (
     <>
@@ -61,7 +62,7 @@ function ProfileButton({ user }) {
             </li>
           </>
         ) : (
-          <>
+          <React.Fragment className="profile-dropdown-buttons">
             <OpenModalMenuItem
               itemText="Log In"
               onItemClick={closeMenu}
@@ -72,7 +73,7 @@ function ProfileButton({ user }) {
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
             />
-          </>
+          </React.Fragment>
         )}
       </ul>
     </>

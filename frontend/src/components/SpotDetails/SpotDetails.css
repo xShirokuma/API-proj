@@ -15,14 +15,29 @@
   gap: 1%;
 }
 
+.spot-small-img img {
+  height: 100%;
+  object-fit: cover;
+}
+
 .spot-details-container {
   padding: 0 2.5%;
+  display: flex;
+  flex-direction: column;
+  gap: 1em
 }
+
 .spot-preview-image {
   grid-area: preview;
 }
 
+.spot-preview-image img {
+  height: 100%;
+  object-fit: cover;
+}
+
 .booking-container {
+  padding: 1%;
   border: 1px solid black;
   border-radius: 10px;
   display: flex;
@@ -30,22 +45,45 @@
 }
 
 .booking-stats {
-  padding: 5%;
+  padding: 2.5%;
   display: flex;
   justify-content: space-between;
 }
 
 .booking-button-container {
+  padding: 2.5% 2%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .booking-button-container > button {
+  color: white;
+  background-color: #a16889;
   width: 80%;
   height: 100%;
+  box-shadow: 2px 2px black;
 }
 
 .ratings-reviews-container {
   display: flex;
+}
+
+#price {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+#review-one-forreal .reviews,#review-one-forreal .rating {
+  font-size: 1.5em;
+}
+
+.all-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.review-timestamp {
+  color: grey;
 }

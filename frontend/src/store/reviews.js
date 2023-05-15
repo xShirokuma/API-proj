@@ -12,13 +12,6 @@ const getSpotReviews = (reviews) => {
   };
 };
 
-const postSpotReview = (review) => {
-  return {
-    type: POST_SPOT_REVIEW,
-    review,
-  };
-};
-
 const deleteReview = (id) => {
   return {
     type: DELETE_REVIEW,
@@ -45,7 +38,7 @@ export const createSpotReviewThunk = (review, spotId) => async (dispatch) => {
     body: JSON.stringify(review),
   };
 
-  const postres = await csrfFetch(`/api/spots/${spotId}/reviews`, options);
+  await csrfFetch(`/api/spots/${spotId}/reviews`, options);
 
   const res = await fetch(`/api/spots/${spotId}/reviews`);
 
